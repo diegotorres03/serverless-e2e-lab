@@ -29,7 +29,17 @@ export class RestApiStack extends Stack {
         })
         new CfnOutput(this, 'getOrdersLambda', { value: getOrdersLambda.functionName })
 
-        // [ ] 2.1.2: create lambdas for createOrder
+        
+        // [x] 2.1.2: create lambdas for createOrder
+        const createOrderLambda = new Lambda.Function(this, 'createOrder', {
+            runtime: Lambda.Runtime.NODEJS_14_X,
+            handler: 'index.handler',
+            code: Lambda.Code.fromAsset('../functions/create-order'),
+            environment: {  /* 3.1.2 */  }
+        })
+        new CfnOutput(this, 'createOrderLambda', { value: createOrderLambda.functionName })
+
+
         // [ ] 2.1.3: create lambdas for updateOrder
         
         // [ ] 3.1.2: grant lambda access to dynamo table

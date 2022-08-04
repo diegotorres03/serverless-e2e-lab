@@ -23,7 +23,19 @@ class ApiStack(Stack):
         # [ ] 3.1.2: connect api to dynamodb
         
         # [ ] 2.1.1: create lambdas for getOrders
-        # [ ] 2.1.2: create lambdas for createOrder
+        
+        # [x] 2.1.2: create lambdas for createOrder
+        create_orders_lambda = lambda_.Function(self, 'createOrder',
+            runtime=lambda_.Runtime.NODEJS_16_X,
+            handler='index.handler',
+            code=lambda_.Code.from_asset('../functions/create-order'),
+        )
+        # 3.1.2
+        # create_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)
+        # orders_table.grant_read_write_data(create_orders_lambda)
+        CfnOutput(self, 'create_orders_lambda', value= create_orders_lambda.function_name)
+
+
         # [ ] 2.1.3: create lambdas for updateOrder
         
         # [ ] 3.1.2: grant lambda access to dynamo table 

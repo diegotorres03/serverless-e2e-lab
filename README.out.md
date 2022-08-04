@@ -14,7 +14,7 @@
 2. **REST API:**
     1. **handlers**
        1. [x] 2.1.1: create lambdas for getOrders
-       2. [ ] 2.1.2: create lambdas for createOrder
+       2. [x] 2.1.2: create lambdas for createOrder
        3. [ ] 2.1.3: create lambdas for updateOrder
     2. **API (CDK/ClaudiaJS):**
        1. [ ] 2.2.1: create api
