@@ -724,7 +724,7 @@ Don't forget to grant read, write access crom dynamo to the respective lambda fu
 
 ```
 
-**file:** `./infraestructure-py/api_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/api_stack.py`
 **replace key:** `# [ ] 3.1.2: connect api to dynamodb`
 ```py
         # [x] 3.1.2: connect api to dynamodb
@@ -734,7 +734,7 @@ Don't forget to grant read, write access crom dynamo to the respective lambda fu
 ```
 
 
-**file:** `./infraestructure-py/api_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/api_stack.py`
 **replace key:** `# [ ] 3.1.2: grant lambda access to dynamo table `
 ```py
         # [ ] 3.1.2: grant lambda access to dynamo table 
