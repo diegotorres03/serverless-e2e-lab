@@ -19,7 +19,16 @@ export class RestApiStack extends Stack {
         // [import value](https://docs.aws.amazon.com/cdk/api/v1/docs/@aws-cdk_core.Fn.html#static-importwbrvaluesharedvaluetoimport)
         // [ ] 3.1.2: connect api to dynamodb
         
-        // [ ] 2.1.1: create lambdas for getOrders
+        
+        // [x] 2.1.1: create lambdas for getOrders
+        const getOrdersLambda = new Lambda.Function(this, 'getOrders', {
+            runtime: Lambda.Runtime.NODEJS_14_X,
+            handler: 'index.handler',
+            code: Lambda.Code.fromAsset('../functions/get-orders'),
+            environment: { /* 3.1.2 */ }
+        })
+        new CfnOutput(this, 'getOrdersLambda', { value: getOrdersLambda.functionName })
+
         // [ ] 2.1.2: create lambdas for createOrder
         // [ ] 2.1.3: create lambdas for updateOrder
         
