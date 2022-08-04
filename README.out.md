@@ -5,7 +5,7 @@
 1. **Webapp:**
     1. **Hosting (S3):** where to store app assets?
        1. [x] 1.1.1: create S3 Bucket as web hosting to store webapp 
-       2. [ ] 1.1.2: add command to update web assets in S3
+       2. [x] 1.1.2: add command to update web assets in S3
     2. **CDN (CloudFront):** How to distribute assets across the globe?
        1. [ ] 1.2.1: create CloudFront distribution
        2. [ ] 1.2.2: add command to invalidate cloudfront distribution

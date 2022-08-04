@@ -12,7 +12,10 @@ $distributionId=$WebappConfig.webapp.distributionId
 Copy-Item -Path ..\api.json -Destination .
 
 Write-Host 'Uploading assets to' + $bucketName
-#  [ ] 1.1.2: add command to update web assets in S3
+
+#  [x] 1.1.2: add command to update web assets in S3
+aws s3 cp . $bucketName --recursive
+
 
 
 Write-Host 'Deleting cache for distribution id =' + $distributionId
