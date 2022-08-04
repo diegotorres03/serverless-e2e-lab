@@ -5,22 +5,22 @@
     "todo": "1.1.1",
     "content": [
       {
-        "path": ".\\infraestructure/lib/webapp-stack.ts",
+        "path": "./infraestructure/lib/webapp-stack.ts",
         "key": "// [ ] 1.1.1: create S3 Bucket as web hosting to store webapp",
         "value": "\r\n        // [x] 1.1.1: create S3 Bucket as web hosting to store webapp\r\n        const webappBucket = new S3.Bucket(this, 'webapp-artifact', {\r\n            accessControl: S3.BucketAccessControl.PRIVATE,\r\n            cors: [{\r\n                allowedMethods: [S3.HttpMethods.GET],\r\n                allowedOrigins: ['*'],\r\n\r\n                // the properties below are optional\r\n                allowedHeaders: ['Authorization'],\r\n                exposedHeaders: [],\r\n            }],\r\n            removalPolicy: RemovalPolicy.DESTROY,\r\n        })\r\n\r\n        const webappDeployment = new S3Deployment.BucketDeployment(this, 'deployStaticWebapp', {\r\n            sources: [S3Deployment.Source.asset(props?.assetsPath || '../webapp')],\r\n            destinationBucket: webappBucket,\r\n        })\r\n        \r\n        // export bucket Name\r\n        new CfnOutput(this, 'webappBucketName', { value: webappBucket.bucketName })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure/lib/webapp-stack.ts",
+        "path": "./infraestructure/lib/webapp-stack.ts",
         "key": "// imports",
         "value": "\r\n    aws_cloudfront as CloudFront,\r\n    aws_cloudfront_origins as CloudFrontOrigins,\r\n    // imports\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\webapp_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/webapp_stack.py",
         "key": "# [ ] 1.1.1: create S3 Bucket as web hosting to store webapp",
-        "value": "\r\n        # [x] 1.1.1: create S3 Bucket as web hosting to store webapp\r\n        webapp_bucket = s3.Bucket(self, \"webapp_bucket\", \r\n            cors=[\r\n                s3.CorsRule(\r\n                    allowed_headers=['Autorization'],\r\n                    allowed_origins=['*'],\r\n                    allowed_methods=[s3.HttpMethods.HEAD, s3.HttpMethods.GET],\r\n                    exposed_headers=[]\r\n                )\r\n            ],\r\n            removal_policy=RemovalPolicy.DESTROY\r\n        )\r\n\r\n        CfnOutput(self, 'webappBucketName', value= webapp_bucket.bucket_name)\r\n\r\n"
+        "value": "\r\n        # [x] 1.1.1: create S3 Bucket as web hosting to store webapp\r\n        webapp_bucket = s3.Bucket(self, \"webapp_bucket\", \r\n            cors=[\r\n                s3.CorsRule(\r\n                    allowed_headers=['Autorization'],\r\n                    allowed_origins=['*'],\r\n                    allowed_methods=[s3.HttpMethods.HEAD, s3.HttpMethods.GET],\r\n                    exposed_headers=[]\r\n                )\r\n            ],\r\n            removal_policy=RemovalPolicy.DESTROY\r\n        )\r\n        # TODO: add the deployment part\r\n        CfnOutput(self, 'webappBucketName', value= webapp_bucket.bucket_name)\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\webapp_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/webapp_stack.py",
         "key": "# imports",
         "value": "\r\n    aws_cloudfront as cloudfront,\r\n    aws_cloudfront_origins as cloudfront_origins,\r\n    # imports\r\n"
       }
@@ -32,14 +32,9 @@
     "todo": "1.1.2",
     "content": [
       {
-        "path": ".\\webapp/deploy.ps1",
+        "path": "./webapp/deploy.ps1",
         "key": "#  [ ] 1.1.2: add command to update web assets in S3",
-        "value": "\r\n#  [x] 1.1.2: add command to update web assets in S3\r\naws s3 cp . s3://your-s3-bucket --recursive\r\n"
-      },
-      {
-        "path": ".\\webapp/deploy.sh",
-        "key": "#  [ ] 1.1.2: add command to update web assets in S3",
-        "value": "\r\n#  [x] 1.1.2: add command to update web assets in S3\r\naws s3 cp . s3://your-s3-bucket --recursive\r\n"
+        "value": "\r\n#  [x] 1.1.2: add command to update web assets in S3\r\naws s3 cp . $bucketName --recursive\r\n"
       }
     ]
   },
@@ -49,14 +44,14 @@
     "todo": "1.2.1",
     "content": [
       {
-        "path": ".\\infraestructure/lib/webapp-stack.ts",
+        "path": "./infraestructure/lib/webapp-stack.ts",
         "key": "// [ ] 1.2.1: create CloudFront distribution",
         "value": "\r\n        // [x] 1.2.1: create CloudFront distribution\r\n        const originAccessIdentity = new CloudFront.OriginAccessIdentity(this, 'OriginAccessIdentity')\r\n        \r\n        // allow clowdfront to read s3 webpp files\r\n        webappBucket.grantRead(originAccessIdentity)\r\n\r\n        const cdnDistribution = new CloudFront.Distribution(this, 'WebappDistribution', {\r\n            defaultRootObject: 'index.html',\r\n\r\n            defaultBehavior: {\r\n                origin: new CloudFrontOrigins.S3Origin(webappBucket, { originAccessIdentity })\r\n            }\r\n        })\r\n    \r\n        // export webapp dns url\r\n        new CfnOutput(this, 'webappDnsUrl', { value: cdnDistribution.distributionDomainName })\r\n        new CfnOutput(this, 'distributionId', { value: cdnDistribution.distributionId })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\webapp_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/webapp_stack.py",
         "key": "# [ ] 1.2.1: create CloudFront distribution",
-        "value": "\r\n        # [x] 1.2.1: create CloudFront distribution\r\n        origin_access_identity = cloudfront.OriginAccessIdentity(self, 'OriginAccessIdentity')\r\n        \r\n        # to allow access to s3 from cloudfront\r\n        webapp_bucket.grant_read(origin_access_identity)\r\n\r\n        cdn_distribution = cloudfront.Distribution(self, 'WebappDistribution',\r\n            default_root_object='index.html',\r\n            default_behavior=cloudfront.BehaviorOptions(\r\n                origin=cloudfront_origins.S3Origin(webapp_bucket, origin_access_identity=origin_access_identity)\r\n            )\r\n\r\n        )\r\n        \r\n        CfnOutput(self, 'webappDnsUrl', value= cdn_distribution.distribution_domain_name)\r\n        CfnOutput(self, 'distributionId', value= cdn_distribution.distribution_id)\r\n\r\n"
+        "value": "\r\n        # [x] 1.2.1: create CloudFront distribution\r\n        origin_access_identity = cloudfront.OriginAccessIdentity(self, 'OriginAccessIdentity')\r\n        \r\n        # to allow access to s3 from cloudfront\r\n        webapp_bucket.grant_read(origin_access_identity)\r\n\r\n        cdn_distribution = cloudfront.Distribution(self, 'WebappDistribution',\r\n            default_root_object='index.html',\r\n            default_behavior=cloudfront.BehaviorOptions(\r\n                origin=cloudfront_origins.S3Origin(webapp_bucket, origin_access_identity=origin_access_identity)\r\n            )\r\n        )\r\n        \r\n        CfnOutput(self, 'webappDnsUrl', value= cdn_distribution.distribution_domain_name)\r\n        CfnOutput(self, 'distributionId', value= cdn_distribution.distribution_id)\r\n\r\n"
       }
     ]
   },
@@ -66,14 +61,29 @@
     "todo": "1.2.2",
     "content": [
       {
-        "path": ".\\webapp/deploy.ps1",
+        "path": "./webapp/deploy.ps1",
         "key": "#  [ ] 1.2.2: add command to invalidate cloudfront distribution",
-        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\ncloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths '/*'\r\n"
+        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\ncloudfront create-invalidation --distribution-id $distributionId --paths '/*'\r\n"
       },
       {
-        "path": ".\\webapp/deploy.sh",
-        "key": "#  [ ] 1.2.2: add command to invalidate cloudfront distribution",
-        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\ncloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths '/*'\r\n"
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// imports",
+        "value": "\r\n    RestApiStack,\r\n    // imports\r\n"
+      },
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// creating RestApiStack",
+        "value": "\r\n    // creating RestApiStack\r\n    const restApi = new RestApiStack(app, 'api', {\r\n        env: { region: }\r\n    })\r\n"
+      },
+      {
+        "path": "./infraestructure-py/app.py",
+        "key": "# imports",
+        "value": "\r\n    from infraestructure_python.api_stack import ApiStack\r\n    # imports\r\n"
+      },
+      {
+        "path": "./infraestructure-py/app.py",
+        "key": "# creating RestApiStack",
+        "value": "\r\n    # creating RestApiStack\r\n    api = ApiStack(app, 'api-py', env=cdk.Environment(region=region))\r\n"
       }
     ]
   },
@@ -83,14 +93,14 @@
     "todo": "2.1.1",
     "content": [
       {
-        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.1.1: create lambdas for getOrders",
         "value": "\r\n        // [x] 2.1.1: create lambdas for getOrders\r\n        const getOrdersLambda = new Lambda.Function(this, 'getOrders', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            handler: 'index.handler',\r\n            code: Lambda.Code.fromAsset('../functions/get-orders'),\r\n            environment: { /* 3.1.2 */ }\r\n        })\r\n        new CfnOutput(this, 'getOrdersLambda', { value: getOrdersLambda.functionName })\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
         "key": "#[ ] 2.1.1: create lambdas for getOrders",
-        "value": "\r\n        # [x] 2.1.1: create lambdas for getOrders\r\n        get_orders_lambda = lambda_.Function(self, 'getOrders',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/get-orders')\r\n        )\r\n        # 3.1.2\r\n        orders_table.grant_read_write_data(get_orders_lambda)\r\n        CfnOutput(self, 'get_orders_lambda', value= get_orders_lambda.function_name)\r\n\r\n"
+        "value": "\r\n        # [x] 2.1.1: create lambdas for getOrders\r\n        get_orders_lambda = lambda_.Function(self, 'getOrders',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/get-orders')\r\n        )\r\n        # 3.1.2\r\n        # orders_table.grant_read_write_data(get_orders_lambda)\r\n        \r\n        CfnOutput(self, 'get_orders_lambda', value= get_orders_lambda.function_name)\r\n\r\n"
       }
     ]
   },
@@ -100,14 +110,14 @@
     "todo": "2.1.2",
     "content": [
       {
-        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.1.2: create lambdas for createOrder",
         "value": "\r\n        // [x] 2.1.2: create lambdas for createOrder\r\n        const createOrderLambda = new Lambda.Function(this, 'createOrder', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            handler: 'index.handler',\r\n            code: Lambda.Code.fromAsset('../functions/create-order'),\r\n            environment: {  /* 3.1.2 */  }\r\n        })\r\n        new CfnOutput(this, 'createOrderLambda', { value: createOrderLambda.functionName })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
         "key": "# [ ] 2.1.2: create lambdas for createOrder",
-        "value": "\r\n        # [x] 2.1.2: create lambdas for createOrder\r\n        create_orders_lambda = lambda_.Function(self, 'createOrder',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/create-order'),\r\n        )\r\n        # 3.1.2\r\n        create_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)\r\n        orders_table.grant_read_write_data(create_orders_lambda)\r\n        CfnOutput(self, 'create_orders_lambda', value= create_orders_lambda.function_name)\r\n\r\n"
+        "value": "\r\n        # [x] 2.1.2: create lambdas for createOrder\r\n        create_orders_lambda = lambda_.Function(self, 'createOrder',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/create-order'),\r\n        )\r\n        # 3.1.2\r\n        # create_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)\r\n        # orders_table.grant_read_write_data(create_orders_lambda)\r\n        CfnOutput(self, 'create_orders_lambda', value= create_orders_lambda.function_name)\r\n\r\n"
       }
     ]
   },
@@ -117,14 +127,14 @@
     "todo": "2.1.3",
     "content": [
       {
-        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.1.3: create lambdas for updateOrder",
         "value": "\r\n        // [x] 2.1.3: create lambdas for updateOrder\r\n        const updateOrderLambda = new Lambda.Function(this, 'updateOrder', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            handler: 'index.handler',\r\n            code: Lambda.Code.fromAsset('../functions/update-order'),\r\n            environment: { /* 3.1.2 */ }\r\n        })\r\n        new CfnOutput(this, 'updateOrderLambda', { value: updateOrderLambda.functionName })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
         "key": "# [ ] 2.1.3: create lambdas for updateOrder",
-        "value": "\r\n        # [x] 2.1.3: create lambdas for updateOrder\r\n        update_orders_lambda = lambda_.Function(self, 'updateOrder',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/update-order')\r\n        )\r\n        # 3.1.2\r\n        update_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)\r\n        orders_table.grant_read_write_data(update_orders_lambda)\r\n        CfnOutput(self, 'update_orders_lambda', value= update_orders_lambda.function_name)\r\n\r\n    \r\n"
+        "value": "\r\n        # [x] 2.1.3: create lambdas for updateOrder\r\n        update_orders_lambda = lambda_.Function(self, 'updateOrder',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/update-order')\r\n        )\r\n        # 3.1.2\r\n        # update_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)\r\n        # orders_table.grant_read_write_data(update_orders_lambda)\r\n        CfnOutput(self, 'update_orders_lambda', value= update_orders_lambda.function_name)\r\n\r\n    \r\n"
       }
     ]
   },
@@ -134,14 +144,14 @@
     "todo": "2.2.1",
     "content": [
       {
-        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.2.1: create api",
         "value": "\r\n        // [x] 2.2.1: create api\r\n        const api = new ApiGateway.RestApi(this, 'ordersApi', {\r\n            description: 'handle api calls from webapp',\r\n            deployOptions: { stageName: 'dev' },\r\n            defaultCorsPreflightOptions: {\r\n                allowHeaders: [\r\n                    'Content-Type',\r\n                    'X-Amz-Date',\r\n                    'Authorization',\r\n                    'X-Api-Key',\r\n                    'Access-Control-Allow-Headers',\r\n                    \"Access-Control-Allow-Origin\",\r\n                    \"Access-Control-Allow-Methods\",\r\n                ],\r\n                allowOrigins: ApiGateway.Cors.ALL_ORIGINS,\r\n                allowMethods: ApiGateway.Cors.ALL_METHODS,\r\n                allowCredentials: true,\r\n            },\r\n        })\r\n\r\n        new CfnOutput(this, 'apiUrl', { value: api.url })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
         "key": "# [ ] 2.2.1: create api",
-        "value": "\r\n        # [x] 2.2.1: create api\r\n        api = apigateway.RestApi(self, 'ordersApi',\r\n            description='handle api calls from webapp',\r\n            deploy_options=apigateway.StageOptions(stage_name='dev'),\r\n            default_cors_preflight_options=apigateway.CorsOptions(\r\n                allow_headers=[\r\n                    'Content-Type',\r\n                    'X-Amz-Date',\r\n                    'Authorization',\r\n                    'X-Api-Key',\r\n                ],\r\n                allow_origins=apigateway.Cors.ALL_ORIGINS,\r\n                allow_methods=apigateway.Cors.ALL_METHODS,\r\n                allow_credentials=True\r\n            )\r\n        )\r\n        CfnOutput(self, 'apiUrl',value= api.url)\r\n"
+        "value": "\r\n        # [x] 2.2.1: create api\r\n        api = apigateway.RestApi(self, 'ordersApi',\r\n            description='handle api calls from webapp',\r\n            deploy_options=apigateway.StageOptions(stage_name='dev'),\r\n            default_cors_preflight_options=apigateway.CorsOptions(\r\n                allow_headers=[\r\n                    'Content-Type',\r\n                    'X-Amz-Date',\r\n                    'Authorization',\r\n                    'X-Api-Key',\r\n                    'Access-Control-Allow-Headers',\r\n                    \"Access-Control-Allow-Origin\",\r\n                    \"Access-Control-Allow-Methods\"\r\n                ],\r\n                allow_origins=apigateway.Cors.ALL_ORIGINS,\r\n                allow_methods=apigateway.Cors.ALL_METHODS,\r\n                allow_credentials=True\r\n            )\r\n        )\r\n        CfnOutput(self, 'apiUrl',value= api.url)\r\n"
       }
     ]
   },
@@ -151,12 +161,12 @@
     "todo": "2.2.2",
     "content": [
       {
-        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.2.2: create /orders resource [POST, GET]",
         "value": "\r\n        // [x] 2.2.2: create /orders resource [POST, GET]\r\n        const ordersEndpoint = api.root.addResource('orders')\r\n        ordersEndpoint.addMethod('GET', new ApiGateway\r\n            .LambdaIntegration(getOrdersLambda, { proxy: true }), { authorizer })\r\n        ordersEndpoint.addMethod('POST', new ApiGateway\r\n            .LambdaIntegration(createOrderLambda, { proxy: true }), { authorizer })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
         "key": "# [ ] 2.2.2: create /orders resource [POST, GET]",
         "value": "\r\n        # [x] 2.2.2: create /orders resource [POST, GET]\r\n        orders_endpoint = api.root.add_resource('orders')\r\n        orders_endpoint.add_method('GET', apigateway.LambdaIntegration(get_orders_lambda, proxy=True))\r\n        orders_endpoint.add_method('POST', apigateway.LambdaIntegration(create_orders_lambda, proxy=True))\r\n       \r\n"
       }
@@ -168,14 +178,14 @@
     "todo": "2.2.3",
     "content": [
       {
-        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.2.3: create /orders/{customer}/{id}",
-        "value": "\r\n        // [x] 2.2.3: create /orders/{customer}/{id}\r\n        const singleOrderEndpoint = ordersEndpoint.addResource('{customer}').addResource('{id}')\r\n        singleOrderEndpoint\r\n            .addMethod('PATCH', new ApiGateway\r\n            .LambdaIntegration(updateOrderLambda, { proxy: true }), { authorizer })\r\n\r\n\r\n"
+        "value": "\r\n        // [x] 2.2.3: create /orders/{customer}/{id}\r\n        const singleOrderEndpoint = ordersEndpoint.addResource('{customer}').addResource('{id}')\r\n        singleOrderEndpoint\r\n            .addMethod('PATCH', new ApiGateway\r\n            .LambdaIntegration(updateOrderLambda, { proxy: true }), { authorizer })\r\n\r\n"
       },
       {
-        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
         "key": "# [ ] 2.2.3: create /orders/{customer}/{id}",
-        "value": "\r\n        # [x] 2.2.3: create /orders/{customer}/{id}\r\n        single_order_endpoint = orders_endpoint.add_resource('{customer}').add_resource('{id}')\r\n        single_order_endpoint.add_method('PATCH', apigateway.LambdaIntegration(update_orders_lambda, proxy=True))\r\n\r\n       \r\n"
+        "value": "\r\n        # [x] 2.2.3: create /orders/{customer}/{id}\r\n        single_order_endpoint = orders_endpoint.add_resource('{customer}').add_resource('{id}')\r\n        single_order_endpoint.add_method('PATCH', apigateway.LambdaIntegration(update_orders_lambda, proxy=True))\r\n\r\n"
       }
     ]
   },
@@ -185,9 +195,9 @@
     "todo": "2.3.1",
     "content": [
       {
-        "path": ".\\webapp\\src\\index.js",
+        "path": "./webapp/src/main.js",
         "key": "// [ ] 2.3.1: get orders from api",
-        "value": "\r\n            // [x] 2.3.1: get orders from api\r\n            const options = {\r\n                method: 'POST',\r\n                body: JSON.stringify({\r\n                    id: Date.now().toString(),\r\n                    customer: 'diegotrs',\r\n                    items: items,\r\n                }),\r\n                headers: {\r\n                    'Content-Type': 'application/json',\r\n\r\n                    // [ ] 5.3.2 use Authorization header on http createOrder\r\n                    'Authorization': 'json.web.token'\r\n                }\r\n            }\r\n\r\n            await fetch(url, options)\r\n"
+        "value": "\r\n            // [x] 2.3.1: get orders from api\r\n            orders = await fetch(url, options, {\r\n                'Content-Type': 'application/json', // 'text/html',\r\n                // [ ] 5.3.1 use Authorization header on http getOrders\r\n            })\r\n"
       }
     ]
   },
@@ -197,12 +207,303 @@
     "todo": "2.3.2",
     "content": [
       {
-        "path": ".\\webapp\\src\\index.js",
+        "path": "./webapp/src/main.js",
         "key": "// [ ] 2.3.2: send the order to the api",
-        "value": "\r\n            // [x] 2.3.2: send the order to the api\r\n            const options = {\r\n                method: 'POST',\r\n                body: JSON.stringify({\r\n                    id: Date.now().toString(),\r\n                    customer: 'diegotrs',\r\n                    items: items,\r\n                }),\r\n                headers: {\r\n                    'Content-Type': 'application/json',\r\n\r\n                    // [ ] 5.3.2 use Authorization header on http createOrder\r\n                    'Authorization': 'json.web.token'\r\n                }\r\n            }\r\n\r\n            await fetch(url, options)\r\n"
+        "value": "\r\n            // [x] 2.3.2: send the order to the api\r\n            const options = {\r\n                method: 'POST',\r\n                body: JSON.stringify({\r\n                    id: order.id,\r\n                    customer: order.customer,\r\n                    items: order.items,\r\n                }),\r\n                headers: {\r\n                    'Content-Type': 'application/json',\r\n                    // [ ] 5.3.2 use Authorization header on http createOrder\r\n                }\r\n            }\r\n\r\n            await fetch(url, options)\r\n"
       },
       {
-        "path": ".\\infraestructure\\lib\\backend-stack.ts",
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// imports",
+        "value": "\r\n    BackendStack,\r\n    // imports\r\n"
+      },
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// creating BackendStack",
+        "value": "\r\n    // creating BackendStack\r\n    const backend = new BackendStack(app, 'backend', {\r\n        env: { region }\r\n    })\r\n"
+      },
+      {
+        "path": "./infraestructure-py/app.py",
+        "key": "# imports",
+        "value": "\r\n    from infraestructure_python.backend_stack import BackendStack\r\n    # imports\r\n"
+      },
+      {
+        "path": "./infraestructure-py/app.py",
+        "key": "# creating RestApiStack",
+        "value": "\r\n    # creating RestApiStack\r\n    backend = BackendStack(app, 'backend-py', env=cdk.Environment(region=region))\r\n"
+      }
+    ]
+  },
+  "3.1.1": {
+    "task": "create DynamoDB orders table",
+    "branch": "git checkout -b md3.1.1",
+    "todo": "3.1.1",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [x] 3.1.1: create DynamoDB orders table",
+        "value": "\r\n        const ordersTable = new DynamoDB.Table(this, 'orders', {\r\n            partitionKey: { name: 'customer', type: DynamoDB.AttributeType.STRING },\r\n            sortKey: { name: 'id', type: DynamoDB.AttributeType.STRING },\r\n            billingMode: DynamoDB.BillingMode.PAY_PER_REQUEST,\r\n            stream: DynamoDB.StreamViewType.NEW_AND_OLD_IMAGES,\r\n            timeToLiveAttribute,\r\n            removalPolicy: RemovalPolicy.DESTROY,\r\n        })\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [x] 3.1.1: create DynamoDB orders table",
+        "value": "\r\n        orders_table = dynamo.Table(self, 'orders',\r\n            partition_key=dynamo.Attribute(name='customer', type=dynamo.AttributeType.STRING),\r\n            sort_key=dynamo.Attribute(name='id', type=dynamo.AttributeType.STRING),\r\n            billing_mode=dynamo.BillingMode.PAY_PER_REQUEST,\r\n            stream=dynamo.StreamViewType.NEW_AND_OLD_IMAGES,\r\n            time_to_live_attribute=time_to_live_attribute,\r\n            removal_policy=RemovalPolicy.DESTROY\r\n        )\r\n"
+      }
+    ]
+  },
+  "3.1.2": {
+    "task": "connect api to dynamodb",
+    "branch": "git checkout -b md3.1.2",
+    "todo": "3.1.2",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 3.1.2: connect api to dynamodb",
+        "value": "\r\n        // [x] 3.1.2: connect api to dynamodb\r\n        new CfnOutput(this, 'ordersTableName', {\r\n            value: ordersTable.tableName,\r\n            exportName: 'ordersTableName'\r\n        })\r\n        new CfnOutput(this, 'ordersTableArn', {\r\n            value: ordersTable.tableArn,\r\n            exportName: 'ordersTableArn'\r\n        })\r\n"
+      },
+      {
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "// [ ] 3.1.2: connect api to dynamodb",
+        "value": "\r\n        // [x] 3.1.2: connect api to dynamodb\r\n        const ordersTableArn = Fn.importValue('ordersTableArn')\r\n        const ordersTable = DynamoDB.Table.fromTableArn(this, 'ordersTable', ordersTableArn)\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "// [ ] 3.1.2: grant lambda access to dynamo table",
+        "value": "\r\n        // [x] 3.1.2: grant lambda access to dynamo table \r\n        ordersTable.grantReadWriteData(createOrderLambda)\r\n        ordersTable.grantReadWriteData(getOrdersLambda)\r\n        ordersTable.grantReadWriteData(updateOrderLambda)   \r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [ ] 3.1.2: connect api to dynamodb",
+        "value": "\r\n        # [x] 3.1.2: connect api to dynamodb\r\n        CfnOutput(self, 'ordersTableName-py', \r\n            export_name='ordersTableName-py', \r\n            value= orders_table.table_name\r\n        )\r\n\r\n        CfnOutput(self, 'ordersTableArn-py', \r\n            export_name='ordersTableArn-py', \r\n            value= orders_table.table_arn\r\n        )\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
+        "key": "# [ ] 3.1.2: connect api to dynamodb",
+        "value": "\r\n        # [x] 3.1.2: connect api to dynamodb\r\n        orders_table_arn = Fn.import_value('ordersTableArn-py')\r\n        orders_table = dynamo.Table.from_table_arn(self, 'ordersTable', orders_table_arn)\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
+        "key": "# [ ] 3.1.2: grant lambda access to dynamo table ",
+        "value": "\r\n        # [ ] 3.1.2: grant lambda access to dynamo table \r\n        orders_table.grant_read_write_data(get_orders_lambda)\r\n        orders_table.grant_read_write_data(create_orders_lambda)\r\n        orders_table.grant_read_write_data(update_orders_lambda)\r\n\r\n"
+      }
+    ]
+  },
+  "3.2.1": {
+    "task": "use table on getOrders - get all orders from dynamodb",
+    "branch": "git checkout -b md3.2.1",
+    "todo": "3.2.1",
+    "content": [
+      {
+        "path": "./functions/get-orders/index.js",
+        "key": "// [ ] 3.2.1: use table on getOrders - get all orders from dynamodb",
+        "value": "\r\n    // [x] 3.2.1: use table on getOrders - get all orders from dynamodb\r\n    const res = await dynamo.scan({\r\n        TableName: ordersTable,\r\n    }).promise()\r\n    \r\n    orders = res.Items.map(item => new Order(item))\r\n\r\n"
+      }
+    ]
+  },
+  "3.2.2": {
+    "task": "use table on createOrder - put order on dynamodb table",
+    "branch": "git checkout -b md3.2.2",
+    "todo": "3.2.2",
+    "content": [
+      {
+        "path": "./functions/create-order/index.js",
+        "key": "// [ ] 3.2.2: use table on createOrder - put order on dynamodb table",
+        "value": "\r\n    // [x] 3.2.2: use table on createOrder - put order on dynamodb table\r\n    await dynamo.put({\r\n        TableName: ordersTable,\r\n        Item: order\r\n    }).promise()\r\n\r\n"
+      }
+    ]
+  },
+  "3.2.3": {
+    "task": "use table on updateOrder - update an order on dynamodb table",
+    "branch": "git checkout -b md3.2.3",
+    "todo": "3.2.3",
+    "content": [
+      {
+        "path": "./functions/update-order/index.js",
+        "key": "// [ ] 3.2.3: use table on updateOrder - update an order on dynamodb table",
+        "value": "\r\n    // [x] 3.2.3: use table on updateOrder - update an order on dynamodb table\r\n    response = await dynamo.update({\r\n        TableName: ordersTable,\r\n        Key: {\r\n            id: orderId,\r\n            customer: cusotmer,\r\n        },\r\n        ExpressionAttributeNames: { '#status': 'status', '#filledAt': '_filledAt' },\r\n        ExpressionAttributeValues: { ':status': status, ':filledAt': _filledAt },\r\n        UpdateExpression: `set #status = :status, #filledAt = :filledAt`,\r\n    }).promise()\r\n\r\n"
+      }
+    ]
+  },
+  "4.1.1": {
+    "task": "create processing orders queue",
+    "branch": "git checkout -b md4.1.1",
+    "todo": "4.1.1",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 4.1.1: create processing orders queue",
+        "value": "\r\n        // [x] 4.1.1: create processing orders queue\r\n        const ordersQueue = new SQS.Queue(this, 'ordersQueue', {\r\n            visibilityTimeout: Duration.seconds(60)\r\n        })\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "",
+        "value": "\r\n        # [ ] 4.1.1: create processing orders queue\r\n        orders_queue = sqs.Queue(self, 'ordersQueue', \r\n            visibility_timeout=Duration.seconds(60)\r\n        )\r\n\r\n"
+      }
+    ]
+  },
+  "4.1.2": {
+    "task": "create user notification topic (sns)",
+    "branch": "git checkout -b md4.1.2",
+    "todo": "4.1.2",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 4.1.2: create user notification topic (sns)",
+        "value": "\r\n        // [x] 4.1.2: create user notification topic (sns)\r\n        const userNotificationTopic = new SNS.Topic(this, 'userNotification')\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [ ] 4.1.2: create user notification topic (sns)",
+        "value": "\r\n        # [x] 4.1.2: create user notification topic (sns)\r\n        user_notification_topic = sns.Topic(self, 'userNotification')\r\n\r\n"
+      }
+    ]
+  },
+  "4.2.1": {
+    "task": "create a lambda to handle dynamodb stream",
+    "branch": "git checkout -b md4.2.1",
+    "todo": "4.2.1",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 4.2.1: create a lambda to handle dynamodb stream",
+        "value": "\r\n        // [x] 4.2.1: create a lambda to handle dynamodb stream\r\n        const dynamoLambda = new Lambda.Function(this, 'dynamoHandler', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            code: Lambda.Code.fromAsset('../functions/dynamo-handler'),\r\n            handler: 'index.handler',\r\n            environment: {\r\n                QUEUE: ordersQueue.queueUrl,\r\n                TS_DB: '',\r\n                TS_TABLE: '',\r\n            },\r\n        })\r\n        new CfnOutput(this, 'dynamoLambda', {\r\n            value: dynamoLambda.functionName,\r\n        })\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [ ] 4.2.1: create a lambda to handle dynamodb stream",
+        "value": "\r\n        # [x] 4.2.1: create a lambda to handle dynamodb stream\r\n        dynamo_lambda = lambda_.Function(self, 'dynamoHandler',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            code=lambda_.Code.from_asset('../functions/dynamo-handler'),\r\n            handler='index.handler'\r\n        )\r\n        dynamo_lambda.add_environment('QUEUE', orders_queue.queue_url)\r\n        dynamo_lambda.add_environment('TS_DB', '')\r\n        dynamo_lambda.add_environment('TS_TABLE', '')\r\n        CfnOutput(self, 'dynamoLambda-py', \r\n            value= dynamo_lambda.function_name\r\n        )\r\n\r\n"
+      }
+    ]
+  },
+  "4.2.2": {
+    "task": "create a lambda to handle sqs messages",
+    "branch": "git checkout -b md4.2.2",
+    "todo": "4.2.2",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 4.2.2: create a lambda to handle sqs messages",
+        "value": "\r\n        // [x] 4.2.2: create a lambda to handle sqs messages\r\n        const sqsLambda = new Lambda.Function(this, 'sqsHandler', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            code: Lambda.Code.fromAsset('../functions/sqs-handler'),\r\n            handler: 'index.handler',\r\n            environment: { QUEUE: ordersQueue.queueUrl },\r\n        })\r\n        new CfnOutput(this, 'sqsLambda', {\r\n            value: sqsLambda.functionName,\r\n        })\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [ ] 4.2.2: create a lambda to handle sqs messages",
+        "value": "\r\n        # [x] 4.2.2: create a lambda to handle sqs messages\r\n        sqs_lambda = lambda_.Function(self, 'sqsHandler',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            code=lambda_.Code.from_asset('../functions/sqs-handler'),\r\n            handler='index.handler'\r\n        )\r\n        sqs_lambda.add_environment('QUEUE', orders_queue.queue_url)\r\n        CfnOutput(self, 'sqsLambda-py', \r\n            export_name='sqsLambda-py', \r\n            value= sqs_lambda.function_name\r\n        )\r\n\r\n"
+      }
+    ]
+  },
+  "4.3.1": {
+    "task": "set lambda 4.2.1 as handler for dynamodb table updates",
+    "branch": "git checkout -b md4.3.1",
+    "todo": "4.3.1",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates",
+        "value": "\r\n        // [x] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates\r\n        ordersTable.grantStreamRead(dynamoLambda)\r\n        dynamoLambda.addEventSource(new LambdaEventSources.DynamoEventSource(ordersTable, {\r\n            startingPosition: Lambda.StartingPosition.TRIM_HORIZON,\r\n            batchSize: 10,\r\n        }))\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [ ] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates",
+        "value": "\r\n        # [x] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates\r\n        orders_table.grant_stream_read(dynamo_lambda)\r\n\r\n        dynamo_lambda.add_event_source(lambda_event_sources.DynamoEventSource(orders_table,\r\n            starting_position=lambda_.StartingPosition.TRIM_HORIZON,\r\n            batch_size=10\r\n        ))\r\n\r\n"
+      }
+    ]
+  },
+  "4.3.2": {
+    "task": "set lambda 4.2.2 as handler for sqs queue messages",
+    "branch": "git checkout -b md4.3.2",
+    "todo": "4.3.2",
+    "content": [
+      {
+        "path": "./infraestructure/lib/backend-stack.ts",
+        "key": "// [ ] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages",
+        "value": "\r\n        // [x] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages\r\n        ordersQueue.grantSendMessages(dynamoLambda)\r\n        sqsLambda.addEventSource(new LambdaEventSources.SqsEventSource(ordersQueue, {\r\n            batchSize: 2,\r\n        }))\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
+        "key": "# [ ] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages",
+        "value": "\r\n        # [x] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages\r\n        orders_queue.grant_send_messages(sqs_lambda)\r\n        sqs_lambda.add_event_source(\r\n            lambda_event_sources.SqsEventSource(orders_queue, batch_size= 2)\r\n        )\r\n\r\n"
+      }
+    ]
+  },
+  "5.1.1": {
+    "task": "create authenticate lambda function",
+    "branch": "git checkout -b md5.1.1",
+    "todo": "5.1.1",
+    "content": [
+      {
+        "path": "",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  },
+  "5.1.2": {
+    "task": "create an endpoint fot authentication",
+    "branch": "git checkout -b md5.1.2",
+    "todo": "5.1.2",
+    "content": [
+      {
+        "path": "",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  },
+  "5.2.1": {
+    "task": "create the custom authorizer",
+    "branch": "git checkout -b md5.2.1",
+    "todo": "5.2.1",
+    "content": [
+      {
+        "path": "",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  },
+  "5.2.2": {
+    "task": "add authorizer to private endpoints",
+    "branch": "git checkout -b md5.2.2",
+    "todo": "5.2.2",
+    "content": [
+      {
+        "path": "",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  },
+  "5.3.1": {
+    "task": "use `Authorization` header on http createOrder",
+    "branch": "git checkout -b md5.3.1",
+    "todo": "5.3.1",
+    "content": [
+      {
+        "path": "",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  },
+  "5.4.1": {
+    "task": "define Policy Boundary",
+    "branch": "git checkout -b md5.4.1",
+    "todo": "5.4.1",
+    "content": [
+      {
+        "path": "",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  },
+  "5.4.2": {
+    "task": "attach boundary to all constructs",
+    "branch": "git checkout -b md5.4.2",
+    "todo": "5.4.2",
+    "content": [
+      {
+        "path": "",
         "key": "",
         "value": "\r\n\r\n"
       }
