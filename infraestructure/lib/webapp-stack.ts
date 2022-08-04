@@ -50,7 +50,26 @@ export class WebAppStack extends Stack {
         new CfnOutput(this, 'webappBucketName', { value: webappBucket.bucketName })
 
 
-        // [ ] 1.2.1: create CloudFront distribution
+        
+        // [x] 1.2.1: create CloudFront distribution
+        const originAccessIdentity = new CloudFront.OriginAccessIdentity(this, 'OriginAccessIdentity')
+        
+        // allow clowdfront to read s3 webpp files
+        webappBucket.grantRead(originAccessIdentity)
+
+        const cdnDistribution = new CloudFront.Distribution(this, 'WebappDistribution', {
+            defaultRootObject: 'index.html',
+
+            defaultBehavior: {
+                origin: new CloudFrontOrigins.S3Origin(webappBucket, { originAccessIdentity })
+            }
+        })
+    
+        // export webapp dns url
+        new CfnOutput(this, 'webappDnsUrl', { value: cdnDistribution.distributionDomainName })
+        new CfnOutput(this, 'distributionId', { value: cdnDistribution.distributionId })
+
+
         // [o] 1.3.1: create Route 53 record set
 
     }

@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "git commit -am \"home\"; node .\\scripts\\readme2json.js; node .\\scripts\\delete; node .\\scripts\\run",
     "home": "git checkout md",
-    "next": "git checkout md1.2.2",
-    "back": "git checkout md1.1.2"
+    "next": "git checkout md2.1.1",
+    "back": "git checkout md1.2.1"
   },
   "author": "Diego Torres",
   "license": "ISC",

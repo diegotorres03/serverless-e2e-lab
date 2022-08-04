@@ -7,7 +7,7 @@
        1. [x] 1.1.1: create S3 Bucket as web hosting to store webapp 
        2. [x] 1.1.2: add command to update web assets in S3
     2. **CDN (CloudFront):** How to distribute assets across the globe?
-       1. [ ] 1.2.1: create CloudFront distribution
+       1. [x] 1.2.1: create CloudFront distribution
        2. [ ] 1.2.2: add command to invalidate cloudfront distribution
     3. **DNS (Route53):** how to set up DNS? -- optional
        1. [o] {{1.3.1}}

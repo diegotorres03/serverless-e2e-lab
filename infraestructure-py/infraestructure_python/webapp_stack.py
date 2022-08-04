@@ -34,7 +34,24 @@ class WebappStack(Stack):
         CfnOutput(self, 'webappBucketName', value= webapp_bucket.bucket_name)
 
 
-        # [ ] 1.2.1: create CloudFront distribution
+        
+        # [x] 1.2.1: create CloudFront distribution
+        origin_access_identity = cloudfront.OriginAccessIdentity(self, 'OriginAccessIdentity')
+        
+        # to allow access to s3 from cloudfront
+        webapp_bucket.grant_read(origin_access_identity)
+
+        cdn_distribution = cloudfront.Distribution(self, 'WebappDistribution',
+            default_root_object='index.html',
+            default_behavior=cloudfront.BehaviorOptions(
+                origin=cloudfront_origins.S3Origin(webapp_bucket, origin_access_identity=origin_access_identity)
+            )
+        )
+        
+        CfnOutput(self, 'webappDnsUrl', value= cdn_distribution.distribution_domain_name)
+        CfnOutput(self, 'distributionId', value= cdn_distribution.distribution_id)
+
+
 
 
 
