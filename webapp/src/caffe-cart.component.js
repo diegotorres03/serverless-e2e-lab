@@ -1,21 +1,6 @@
-/**
- *
- *
- * @param {string[]} templates
- * @param {string[]} values
- * @return {HTMLElement} 
- */
-const html = function (templates, ...values) {
-    const template = document.createElement('template')
-    let str = ''
-    templates.forEach((template, index) => {
-        str += template
-        str = values[index] ? str + values[index] : str
-    })
 
-    template.innerHTML = str.trim()
-    return template.content.firstChild
-}
+
+
 
 const onPlaceOrder = 'onplaceorder'
 
@@ -115,19 +100,16 @@ class CaffeCart extends HTMLElement {
 
     // called every time an element is inserted into the DOM
     connectedCallback() {
-        console.log('connectedCallback')
         this._render()
     }
 
     // called every time an element is removed from the DOM
     disconnectedCallback() {
-        console.log('disconnectedCallback')
 
     }
 
     // called every time an attribute is added, removed or updated
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log('disconnectedCallback', name, oldValue, newValue)
         // this._render()
     }
 
