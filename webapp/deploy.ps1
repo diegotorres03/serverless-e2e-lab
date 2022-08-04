@@ -19,4 +19,7 @@ aws s3 cp . $bucketName --recursive
 
 
 Write-Host 'Deleting cache for distribution id =' + $distributionId
-#  [ ] 1.2.2: add command to invalidate cloudfront distribution
+
+#  [x] 1.2.2: add command to invalidate cloudfront distribution
+cloudfront create-invalidation --distribution-id $distributionId --paths '/*'
+
