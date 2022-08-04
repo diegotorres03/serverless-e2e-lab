@@ -1,4 +1,4 @@
-const { spawn, exec } = require('child_process')
+const { exec } = require('child_process')
 const { read } = require('fs')
 const { readFile, writeFile } = require('fs/promises')
 const { generateReadme } = require('./generate-readme')
