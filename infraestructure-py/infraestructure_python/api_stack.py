@@ -36,7 +36,20 @@ class ApiStack(Stack):
         CfnOutput(self, 'create_orders_lambda', value= create_orders_lambda.function_name)
 
 
-        # [ ] 2.1.3: create lambdas for updateOrder
+        
+        # [x] 2.1.3: create lambdas for updateOrder
+        update_orders_lambda = lambda_.Function(self, 'updateOrder',
+            runtime=lambda_.Runtime.NODEJS_16_X,
+            handler='index.handler',
+            code=lambda_.Code.from_asset('../functions/update-order')
+        )
+        # 3.1.2
+        # update_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)
+        # orders_table.grant_read_write_data(update_orders_lambda)
+        CfnOutput(self, 'update_orders_lambda', value= update_orders_lambda.function_name)
+
+    
+
         
         # [ ] 3.1.2: grant lambda access to dynamo table 
 
