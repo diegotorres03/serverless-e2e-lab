@@ -32,7 +32,7 @@ async function run() {
         console.log(id, index, branchName)
         await command(`git checkout ${branchName}`)
         await wait(300)
-        await command(`git push origin master`)
+        console.log(await command(`git push origin ${branchName}`))
         await wait(300)
     }
 }
