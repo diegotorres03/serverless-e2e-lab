@@ -638,7 +638,7 @@ And finnaly, add a Stream by specifying the `stream` property on the Table const
 ```
 
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [x] 3.1.1: create DynamoDB orders table`
 ```py
         orders_table = dynamo.Table(self, 'orders',
@@ -708,7 +708,7 @@ Don't forget to grant read, write access crom dynamo to the respective lambda fu
 ```
 
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 3.1.2: connect api to dynamodb`
 ```py
         # [x] 3.1.2: connect api to dynamodb
@@ -839,7 +839,7 @@ Don't forget to grant read, write access crom dynamo to the respective lambda fu
 First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/backend_stack.py)
+**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 **documentaion:**
@@ -856,7 +856,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 ```
 
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** ``
 ```py
         # [ ] 4.1.1: create processing orders queue
@@ -890,7 +890,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 ```
 
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 4.1.2: create user notification topic (sns)`
 ```py
         # [x] 4.1.2: create user notification topic (sns)
@@ -907,7 +907,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 **description:** . 
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/backend_stack.py)
+**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 
@@ -935,7 +935,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 ```
 
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 4.2.1: create a lambda to handle dynamodb stream`
 ```py
         # [x] 4.2.1: create a lambda to handle dynamodb stream
@@ -961,7 +961,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 **description:** . 
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/backend_stack.py)
+**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 **documentaion:**
@@ -984,7 +984,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 ```
 
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 4.2.2: create a lambda to handle sqs messages`
 ```py
         # [x] 4.2.2: create a lambda to handle sqs messages
@@ -1010,7 +1010,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 **description:** . 
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/backend_stack.py)
+**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 **documentaion:**
@@ -1028,7 +1028,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 
 ```
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates`
 ```py
         # [x] 4.3.1: set lambda 4.2.1 as handler for dynamodb table updates
@@ -1050,7 +1050,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 **description:** . 
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/backend_stack.py)
+**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 **documentaion:**
@@ -1067,7 +1067,7 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 
 ```
 
-**file:** `./infraestructure-py/backend_stack.py`
+**file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages`
 ```py
         # [x] 4.3.2: set lambda 4.2.2 as handler for sqs queue messages
