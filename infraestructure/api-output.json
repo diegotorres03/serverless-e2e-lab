@@ -1,0 +1,10 @@
+{
+  "backend": {
+    "ordersTableArn": "arn:aws:dynamodb:us-east-2:760178732320:table/backend-orders46FA7C19-1R58KE4SH3UPD",
+    "ordersTableName": "backend-orders46FA7C19-1R58KE4SH3UPD"
+  },
+  "api": {
+    "ordersapiEndpointD4280EB8": "https://1vui2kjsjf.execute-api.us-east-2.amazonaws.com/dev/",
+    "apiUrl": "https://1vui2kjsjf.execute-api.us-east-2.amazonaws.com/dev/"
+  }
+}

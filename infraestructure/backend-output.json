@@ -1,0 +1,6 @@
+{
+  "backend": {
+    "ordersTableArn": "arn:aws:dynamodb:us-east-2:760178732320:table/backend-orders46FA7C19-1R58KE4SH3UPD",
+    "ordersTableName": "backend-orders46FA7C19-1R58KE4SH3UPD"
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "1.1.1": {
+    "task": "create S3 Bucket as web hosting to store webapp",
+    "branch": "git checkout -b md1.1.1",
+    "todo": "1.1.1",
+    "content": [
+      {
+        "path": ".\\infraestructure/lib/webapp-stack.ts",
+        "key": "// [ ] 1.1.1: create S3 Bucket as web hosting to store webapp",
+        "value": "\r\n        // [x] 1.1.1: create S3 Bucket as web hosting to store webapp\r\n        const webappBucket = new S3.Bucket(this, 'webapp-artifact', {\r\n            accessControl: S3.BucketAccessControl.PRIVATE,\r\n            cors: [{\r\n                allowedMethods: [S3.HttpMethods.GET],\r\n                allowedOrigins: ['*'],\r\n\r\n                // the properties below are optional\r\n                allowedHeaders: ['Authorization'],\r\n                exposedHeaders: [],\r\n            }],\r\n            removalPolicy: RemovalPolicy.DESTROY,\r\n        })\r\n\r\n        const webappDeployment = new S3Deployment.BucketDeployment(this, 'deployStaticWebapp', {\r\n            sources: [S3Deployment.Source.asset(props?.assetsPath || '../webapp')],\r\n            destinationBucket: webappBucket,\r\n        })\r\n        \r\n        // export bucket Name\r\n        new CfnOutput(this, 'webappBucketName', { value: webappBucket.bucketName })\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure/lib/webapp-stack.ts",
+        "key": "// imports",
+        "value": "\r\n    aws_cloudfront as CloudFront,\r\n    aws_cloudfront_origins as CloudFrontOrigins,\r\n    // imports\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\webapp_stack.py",
+        "key": "# [ ] 1.1.1: create S3 Bucket as web hosting to store webapp",
+        "value": "\r\n        # [x] 1.1.1: create S3 Bucket as web hosting to store webapp\r\n        webapp_bucket = s3.Bucket(self, \"webapp_bucket\", \r\n            cors=[\r\n                s3.CorsRule(\r\n                    allowed_headers=['Autorization'],\r\n                    allowed_origins=['*'],\r\n                    allowed_methods=[s3.HttpMethods.HEAD, s3.HttpMethods.GET],\r\n                    exposed_headers=[]\r\n                )\r\n            ],\r\n            removal_policy=RemovalPolicy.DESTROY\r\n        )\r\n\r\n        CfnOutput(self, 'webappBucketName', value= webapp_bucket.bucket_name)\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\webapp_stack.py",
+        "key": "# imports",
+        "value": "\r\n    aws_cloudfront as cloudfront,\r\n    aws_cloudfront_origins as cloudfront_origins,\r\n    # imports\r\n"
+      }
+    ]
+  },
+  "1.1.2": {
+    "task": "add command to update web assets in S3",
+    "branch": "git checkout -b md1.1.2",
+    "todo": "1.1.2",
+    "content": [
+      {
+        "path": ".\\webapp/deploy.ps1",
+        "key": "#  [ ] 1.1.2: add command to update web assets in S3",
+        "value": "\r\n#  [x] 1.1.2: add command to update web assets in S3\r\naws s3 cp . s3://your-s3-bucket --recursive\r\n"
+      },
+      {
+        "path": ".\\webapp/deploy.sh",
+        "key": "#  [ ] 1.1.2: add command to update web assets in S3",
+        "value": "\r\n#  [x] 1.1.2: add command to update web assets in S3\r\naws s3 cp . s3://your-s3-bucket --recursive\r\n"
+      }
+    ]
+  },
+  "1.2.1": {
+    "task": "create CloudFront distribution",
+    "branch": "git checkout -b md1.2.1",
+    "todo": "1.2.1",
+    "content": [
+      {
+        "path": ".\\infraestructure/lib/webapp-stack.ts",
+        "key": "// [ ] 1.2.1: create CloudFront distribution",
+        "value": "\r\n        // [x] 1.2.1: create CloudFront distribution\r\n        const originAccessIdentity = new CloudFront.OriginAccessIdentity(this, 'OriginAccessIdentity')\r\n        \r\n        // allow clowdfront to read s3 webpp files\r\n        webappBucket.grantRead(originAccessIdentity)\r\n\r\n        const cdnDistribution = new CloudFront.Distribution(this, 'WebappDistribution', {\r\n            defaultRootObject: 'index.html',\r\n\r\n            defaultBehavior: {\r\n                origin: new CloudFrontOrigins.S3Origin(webappBucket, { originAccessIdentity })\r\n            }\r\n        })\r\n    \r\n        // export webapp dns url\r\n        new CfnOutput(this, 'webappDnsUrl', { value: cdnDistribution.distributionDomainName })\r\n        new CfnOutput(this, 'distributionId', { value: cdnDistribution.distributionId })\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\webapp_stack.py",
+        "key": "# [ ] 1.2.1: create CloudFront distribution",
+        "value": "\r\n        # [x] 1.2.1: create CloudFront distribution\r\n        origin_access_identity = cloudfront.OriginAccessIdentity(self, 'OriginAccessIdentity')\r\n        \r\n        # to allow access to s3 from cloudfront\r\n        webapp_bucket.grant_read(origin_access_identity)\r\n\r\n        cdn_distribution = cloudfront.Distribution(self, 'WebappDistribution',\r\n            default_root_object='index.html',\r\n            default_behavior=cloudfront.BehaviorOptions(\r\n                origin=cloudfront_origins.S3Origin(webapp_bucket, origin_access_identity=origin_access_identity)\r\n            )\r\n\r\n        )\r\n        \r\n        CfnOutput(self, 'webappDnsUrl', value= cdn_distribution.distribution_domain_name)\r\n        CfnOutput(self, 'distributionId', value= cdn_distribution.distribution_id)\r\n\r\n"
+      }
+    ]
+  },
+  "1.2.2": {
+    "task": "add command to invalidate cloudfront distribution",
+    "branch": "git checkout -b md1.2.2",
+    "todo": "1.2.2",
+    "content": [
+      {
+        "path": ".\\webapp/deploy.ps1",
+        "key": "#  [ ] 1.2.2: add command to invalidate cloudfront distribution",
+        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\ncloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths '/*'\r\n"
+      },
+      {
+        "path": ".\\webapp/deploy.sh",
+        "key": "#  [ ] 1.2.2: add command to invalidate cloudfront distribution",
+        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\ncloudfront create-invalidation --distribution-id YOUR_DISTRIBUTION_ID --paths '/*'\r\n"
+      }
+    ]
+  },
+  "2.1.1": {
+    "task": "create lambdas for getOrders",
+    "branch": "git checkout -b md2.1.1",
+    "todo": "2.1.1",
+    "content": [
+      {
+        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "key": "// [ ] 2.1.1: create lambdas for getOrders",
+        "value": "\r\n        // [x] 2.1.1: create lambdas for getOrders\r\n        const getOrdersLambda = new Lambda.Function(this, 'getOrders', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            handler: 'index.handler',\r\n            code: Lambda.Code.fromAsset('../functions/get-orders'),\r\n            environment: { /* 3.1.2 */ }\r\n        })\r\n        new CfnOutput(this, 'getOrdersLambda', { value: getOrdersLambda.functionName })\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "key": "#[ ] 2.1.1: create lambdas for getOrders",
+        "value": "\r\n        # [x] 2.1.1: create lambdas for getOrders\r\n        get_orders_lambda = lambda_.Function(self, 'getOrders',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/get-orders')\r\n        )\r\n        # 3.1.2\r\n        orders_table.grant_read_write_data(get_orders_lambda)\r\n        CfnOutput(self, 'get_orders_lambda', value= get_orders_lambda.function_name)\r\n\r\n"
+      }
+    ]
+  },
+  "2.1.2": {
+    "task": "create lambdas for createOrder",
+    "branch": "git checkout -b md2.1.2",
+    "todo": "2.1.2",
+    "content": [
+      {
+        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "key": "// [ ] 2.1.2: create lambdas for createOrder",
+        "value": "\r\n        // [x] 2.1.2: create lambdas for createOrder\r\n        const createOrderLambda = new Lambda.Function(this, 'createOrder', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            handler: 'index.handler',\r\n            code: Lambda.Code.fromAsset('../functions/create-order'),\r\n            environment: {  /* 3.1.2 */  }\r\n        })\r\n        new CfnOutput(this, 'createOrderLambda', { value: createOrderLambda.functionName })\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "key": "# [ ] 2.1.2: create lambdas for createOrder",
+        "value": "\r\n        # [x] 2.1.2: create lambdas for createOrder\r\n        create_orders_lambda = lambda_.Function(self, 'createOrder',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/create-order'),\r\n        )\r\n        # 3.1.2\r\n        create_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)\r\n        orders_table.grant_read_write_data(create_orders_lambda)\r\n        CfnOutput(self, 'create_orders_lambda', value= create_orders_lambda.function_name)\r\n\r\n"
+      }
+    ]
+  },
+  "2.1.3": {
+    "task": "create lambdas for updateOrder",
+    "branch": "git checkout -b md2.1.3",
+    "todo": "2.1.3",
+    "content": [
+      {
+        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "key": "// [ ] 2.1.3: create lambdas for updateOrder",
+        "value": "\r\n        // [x] 2.1.3: create lambdas for updateOrder\r\n        const updateOrderLambda = new Lambda.Function(this, 'updateOrder', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            handler: 'index.handler',\r\n            code: Lambda.Code.fromAsset('../functions/update-order'),\r\n            environment: { /* 3.1.2 */ }\r\n        })\r\n        new CfnOutput(this, 'updateOrderLambda', { value: updateOrderLambda.functionName })\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "key": "# [ ] 2.1.3: create lambdas for updateOrder",
+        "value": "\r\n        # [x] 2.1.3: create lambdas for updateOrder\r\n        update_orders_lambda = lambda_.Function(self, 'updateOrder',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/update-order')\r\n        )\r\n        # 3.1.2\r\n        update_orders_lambda.add_environment('ORDERS_TABLE', orders_table.table_name)\r\n        orders_table.grant_read_write_data(update_orders_lambda)\r\n        CfnOutput(self, 'update_orders_lambda', value= update_orders_lambda.function_name)\r\n\r\n    \r\n"
+      }
+    ]
+  },
+  "2.2.1": {
+    "task": "create api",
+    "branch": "git checkout -b md2.2.1",
+    "todo": "2.2.1",
+    "content": [
+      {
+        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "key": "// [ ] 2.2.1: create api",
+        "value": "\r\n        // [x] 2.2.1: create api\r\n        const api = new ApiGateway.RestApi(this, 'ordersApi', {\r\n            description: 'handle api calls from webapp',\r\n            deployOptions: { stageName: 'dev' },\r\n            defaultCorsPreflightOptions: {\r\n                allowHeaders: [\r\n                    'Content-Type',\r\n                    'X-Amz-Date',\r\n                    'Authorization',\r\n                    'X-Api-Key',\r\n                    'Access-Control-Allow-Headers',\r\n                    \"Access-Control-Allow-Origin\",\r\n                    \"Access-Control-Allow-Methods\",\r\n                ],\r\n                allowOrigins: ApiGateway.Cors.ALL_ORIGINS,\r\n                allowMethods: ApiGateway.Cors.ALL_METHODS,\r\n                allowCredentials: true,\r\n            },\r\n        })\r\n\r\n        new CfnOutput(this, 'apiUrl', { value: api.url })\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "key": "# [ ] 2.2.1: create api",
+        "value": "\r\n        # [x] 2.2.1: create api\r\n        api = apigateway.RestApi(self, 'ordersApi',\r\n            description='handle api calls from webapp',\r\n            deploy_options=apigateway.StageOptions(stage_name='dev'),\r\n            default_cors_preflight_options=apigateway.CorsOptions(\r\n                allow_headers=[\r\n                    'Content-Type',\r\n                    'X-Amz-Date',\r\n                    'Authorization',\r\n                    'X-Api-Key',\r\n                ],\r\n                allow_origins=apigateway.Cors.ALL_ORIGINS,\r\n                allow_methods=apigateway.Cors.ALL_METHODS,\r\n                allow_credentials=True\r\n            )\r\n        )\r\n        CfnOutput(self, 'apiUrl',value= api.url)\r\n"
+      }
+    ]
+  },
+  "2.2.2": {
+    "task": "create /orders resource [POST, GET]",
+    "branch": "git checkout -b md2.2.2",
+    "todo": "2.2.2",
+    "content": [
+      {
+        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "key": "// [ ] 2.2.2: create /orders resource [POST, GET]",
+        "value": "\r\n        // [x] 2.2.2: create /orders resource [POST, GET]\r\n        const ordersEndpoint = api.root.addResource('orders')\r\n        ordersEndpoint.addMethod('GET', new ApiGateway\r\n            .LambdaIntegration(getOrdersLambda, { proxy: true }), { authorizer })\r\n        ordersEndpoint.addMethod('POST', new ApiGateway\r\n            .LambdaIntegration(createOrderLambda, { proxy: true }), { authorizer })\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "key": "# [ ] 2.2.2: create /orders resource [POST, GET]",
+        "value": "\r\n        # [x] 2.2.2: create /orders resource [POST, GET]\r\n        orders_endpoint = api.root.add_resource('orders')\r\n        orders_endpoint.add_method('GET', apigateway.LambdaIntegration(get_orders_lambda, proxy=True))\r\n        orders_endpoint.add_method('POST', apigateway.LambdaIntegration(create_orders_lambda, proxy=True))\r\n       \r\n"
+      }
+    ]
+  },
+  "2.2.3": {
+    "task": "create /orders/{customer}/{id}",
+    "branch": "git checkout -b md2.2.3",
+    "todo": "2.2.3",
+    "content": [
+      {
+        "path": ".\\infraestructure\\lib\\api-stack.ts",
+        "key": "// [ ] 2.2.3: create /orders/{customer}/{id}",
+        "value": "\r\n        // [x] 2.2.3: create /orders/{customer}/{id}\r\n        const singleOrderEndpoint = ordersEndpoint.addResource('{customer}').addResource('{id}')\r\n        singleOrderEndpoint\r\n            .addMethod('PATCH', new ApiGateway\r\n            .LambdaIntegration(updateOrderLambda, { proxy: true }), { authorizer })\r\n\r\n\r\n"
+      },
+      {
+        "path": ".\\infraestructure-py\\infraestructure_python\\api_stack.py",
+        "key": "# [ ] 2.2.3: create /orders/{customer}/{id}",
+        "value": "\r\n        # [x] 2.2.3: create /orders/{customer}/{id}\r\n        single_order_endpoint = orders_endpoint.add_resource('{customer}').add_resource('{id}')\r\n        single_order_endpoint.add_method('PATCH', apigateway.LambdaIntegration(update_orders_lambda, proxy=True))\r\n\r\n       \r\n"
+      }
+    ]
+  },
+  "2.3.1": {
+    "task": "get orders from api",
+    "branch": "git checkout -b md2.3.1",
+    "todo": "2.3.1",
+    "content": [
+      {
+        "path": ".\\webapp\\src\\index.js",
+        "key": "// [ ] 2.3.1: get orders from api",
+        "value": "\r\n            // [x] 2.3.1: get orders from api\r\n            const options = {\r\n                method: 'POST',\r\n                body: JSON.stringify({\r\n                    id: Date.now().toString(),\r\n                    customer: 'diegotrs',\r\n                    items: items,\r\n                }),\r\n                headers: {\r\n                    'Content-Type': 'application/json',\r\n\r\n                    // [ ] 5.3.2 use Authorization header on http createOrder\r\n                    'Authorization': 'json.web.token'\r\n                }\r\n            }\r\n\r\n            await fetch(url, options)\r\n"
+      }
+    ]
+  },
+  "2.3.2": {
+    "task": "send the order to the api",
+    "branch": "git checkout -b md2.3.2",
+    "todo": "2.3.2",
+    "content": [
+      {
+        "path": ".\\webapp\\src\\index.js",
+        "key": "// [ ] 2.3.2: send the order to the api",
+        "value": "\r\n            // [x] 2.3.2: send the order to the api\r\n            const options = {\r\n                method: 'POST',\r\n                body: JSON.stringify({\r\n                    id: Date.now().toString(),\r\n                    customer: 'diegotrs',\r\n                    items: items,\r\n                }),\r\n                headers: {\r\n                    'Content-Type': 'application/json',\r\n\r\n                    // [ ] 5.3.2 use Authorization header on http createOrder\r\n                    'Authorization': 'json.web.token'\r\n                }\r\n            }\r\n\r\n            await fetch(url, options)\r\n"
+      },
+      {
+        "path": ".\\infraestructure\\lib\\backend-stack.ts",
+        "key": "",
+        "value": "\r\n\r\n"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "serverless-e2e-steps",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "git commit -am \"home\"; node .\\scripts\\readme2json.js; node .\\scripts\\delete; node .\\scripts\\run",
+    "home": "git checkout md",
+    "next": "git checkout md1.1.2",
+    "back": "git checkout md2.3.2"
+  },
+  "author": "Diego Torres",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node": "^18.6.2",
+    "cypress": "^10.3.1",
+    "http-server": "^14.1.1"
+  }
+}
