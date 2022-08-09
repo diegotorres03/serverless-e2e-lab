@@ -28,8 +28,9 @@ class Order {
     }
 }
 
+const region = process.env.AWS_REGION || 'us-east-2'
 const ordersTable = process.env.ORDERS_TABLE
-const dynamo = new aws.DynamoDB.DocumentClient({ region: 'us-east-2' })
+const dynamo = new aws.DynamoDB.DocumentClient({ region })
 
 async function handler(event) {
     const eventJson = JSON.stringify(event, null, 2)

@@ -11,7 +11,7 @@ region = os.environ['AWS_REGION'] or 'us-east-2'
 app = cdk.App()
 
 # creating WebAppStack
-webapp = WebappStack(app, 'webapp-py', env=cdk.Environment(region=region))
+webapp = WebappStack(app, 'webapp', env=cdk.Environment(region=region))
 
 # creating RestApiStack
 

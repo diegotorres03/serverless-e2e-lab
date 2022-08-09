@@ -1,3 +1,18 @@
+# Requirements:
+In order to properly run this lab, we will require the following applications:
+- [Powershell v7](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2)
+- [Node.js v14](https://nodejs.org/en/download/)
+- [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions)
+- [Git client](https://git-scm.com/download/win)
+
+
+
+# Before the lab
+1. clone [Serverless-e2e-lab](https://github.com/diegotorres03/serverless-e2e-lab) by running `git clone https://github.com/diegotorres03/serverless-e2e-lab.git`  in Powershell.
+2. 
+
+---
+
 # 1.1.1: `create S3 Bucket as web hosting to store webapp`
 
 **description:** In this task, you are required to create an [Amazon S3](https://aws.amazon.com/s3/) bucket to store the static assets for your web application. Then create a bucket deployment to deploy the initial version of the web application. 
@@ -214,7 +229,7 @@ _note: then next updates are set up for next chapter_
 **replace key:** `# creating RestApiStack`
 ```py
     # creating RestApiStack
-    api = ApiStack(app, 'api-py', env=cdk.Environment(region=region))
+    api = ApiStack(app, 'api', env=cdk.Environment(region=region))
 ```
 
 
@@ -600,7 +615,7 @@ _note: then next updates are set up for next chapter_
 **replace key:** `# creating RestApiStack`
 ```py
     # creating RestApiStack
-    backend = BackendStack(app, 'backend-py', env=cdk.Environment(region=region))
+    backend = BackendStack(app, 'backend', env=cdk.Environment(region=region))
 ```
 
 
