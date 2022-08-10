@@ -3,6 +3,7 @@ from aws_cdk import (
     CfnOutput,
     RemovalPolicy,
     aws_s3 as s3,
+    aws_s3_deployment as s3_deployment,
     # imports
 )
 from constructs import Construct
