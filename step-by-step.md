@@ -639,8 +639,9 @@ And finnaly, add a Stream by specifying the `stream` property on the Table const
 - [How it works: DynamoDB Time to Live (TTL)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/howitworks-ttl.html)
 
 **file:** `./infraestructure/lib/backend-stack.ts`
-**replace key:** `// [x] 3.1.1: create DynamoDB orders table`
+**replace key:** `// [ ] 3.1.1: create DynamoDB orders table`
 ```ts
+        // [x] 3.1.1: create DynamoDB orders table
         const ordersTable = new DynamoDB.Table(this, 'orders', {
             partitionKey: { name: 'customer', type: DynamoDB.AttributeType.STRING },
             sortKey: { name: 'id', type: DynamoDB.AttributeType.STRING },
@@ -654,8 +655,9 @@ And finnaly, add a Stream by specifying the `stream` property on the Table const
 
 
 **file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
-**replace key:** `# [x] 3.1.1: create DynamoDB orders table`
+**replace key:** `# [ ] 3.1.1: create DynamoDB orders table`
 ```py
+        # [x] 3.1.1: create DynamoDB orders table
         orders_table = dynamo.Table(self, 'orders',
             partition_key=dynamo.Attribute(name='customer', type=dynamo.AttributeType.STRING),
             sort_key=dynamo.Attribute(name='id', type=dynamo.AttributeType.STRING),
@@ -872,9 +874,9 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 
 
 **file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
-**replace key:** ``
+**replace key:** `# [ ] 4.1.1: create processing orders queue`
 ```py
-        # [ ] 4.1.1: create processing orders queue
+        # [x] 4.1.1: create processing orders queue
         orders_queue = sqs.Queue(self, 'ordersQueue', 
             visibility_timeout=Duration.seconds(60)
         )
