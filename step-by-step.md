@@ -9,7 +9,7 @@ In order to properly run this lab, we will require the following applications:
 
 # Before the lab
 1. clone [Serverless-e2e-lab](https://github.com/diegotorres03/serverless-e2e-lab) by running `git clone https://github.com/diegotorres03/serverless-e2e-lab.git`  in Powershell.
-2. 
+2. on Powershell cd in to `infraestructure` if you want to use Typescript or in `infraestructure-py` yf you want do use Python, then run `cdk bootstrap`
 
 ---
 
