@@ -267,7 +267,7 @@ _runtime:_ `node 14`
 ```
 
 **file:** `./infraestructure-py/infraestructure_python/api_stack.py`
-**replace key:** `#[ ] 2.1.1: create lambdas for getOrders`
+**replace key:** `# [ ] 2.1.1: create lambdas for getOrders`
 ```py
         # [x] 2.1.1: create lambdas for getOrders
         get_orders_lambda = lambda_.Function(self, 'getOrders',
