@@ -221,15 +221,15 @@ _note: then next updates are set up for next chapter_
 **file:** `./infraestructure-py/app.py`
 **replace key:** `# imports`
 ```py
-    from infraestructure_python.api_stack import ApiStack
-    # imports
+from infraestructure_python.api_stack import ApiStack
+# imports
 ```
 
 **file:** `./infraestructure-py/app.py`
 **replace key:** `# creating RestApiStack`
 ```py
-    # creating RestApiStack
-    api = ApiStack(app, 'api', env=cdk.Environment(region=region))
+# creating RestApiStack
+api = ApiStack(app, 'api', env=cdk.Environment(region=region))
 ```
 
 
@@ -607,15 +607,15 @@ _note: then next updates are set up for next chapter_
 **file:** `./infraestructure-py/app.py`
 **replace key:** `# imports`
 ```py
-    from infraestructure_python.backend_stack import BackendStack
-    # imports
+from infraestructure_python.backend_stack import BackendStack
+# imports
 ```
 
 **file:** `./infraestructure-py/app.py`
 **replace key:** `# creating RestApiStack`
 ```py
-    # creating RestApiStack
-    backend = BackendStack(app, 'backend', env=cdk.Environment(region=region))
+# creating RestApiStack
+backend = BackendStack(app, 'backend', env=cdk.Environment(region=region))
 ```
 
 
