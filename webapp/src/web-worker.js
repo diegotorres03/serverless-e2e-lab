@@ -99,30 +99,28 @@ onmessage = async function (event) {
 
 async function getOrders(apiUrl) {
     const url = `${apiUrl}orders`
+    let orders = []
+    
     // [ ] 2.3.1: get orders from api
-
-    const orders = await fetch(url,
-
-        // [ ] 5.3.1 use Authorization header on http getOrders
-        { headers: { 'Authorization': 'json.web.token' } }
-    ).then(res => res.json())
+    
     return orders
 }
 
-async function getOrdersHtml(apiUrl) {
-    const url = `${apiUrl}orders`
-    // [o] 2.3.1: get orders from api
-    const ordersHtml = await fetch(url,
-        // [o] 5.3.1 use Authorization header on http getOrders
-        {
-            headers: {
-                'Content-Type': 'text/html',
-                'Authorization': 'json.web.token',
-            }
-        }
-    ).then(res => res.text()).catch(err => console.warn(err))
-    return ordersHtml
-}
+// async function getOrdersHtml(apiUrl) {
+//     const url = `${apiUrl}orders`
+
+//     // [o] 2.3.1: get orders from api
+//     const ordersHtml = await fetch(url,
+//         // [o] 5.3.1 use Authorization header on http getOrders
+//         {
+//             headers: {
+//                 'Content-Type': 'text/html',
+//                 'Authorization': 'json.web.token',
+//             }
+//         }
+//     ).then(res => res.text()).catch(err => console.warn(err))
+//     return ordersHtml
+// }
 
 /**
     *
@@ -132,20 +130,8 @@ async function getOrdersHtml(apiUrl) {
     */
 function createOrder(url, order) {
     const { id, customer, items } = order
+
     // [ ] 2.3.2: send the order to the api
-    console.log(items, customer, id)
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({ items, customer, id, }),
-        headers: {
-            'Content-Type': 'application/json',
-
-            // [ ] 5.3.2 use Authorization header on http createOrder
-            'Authorization': 'json.web.token'
-        }
-    }
-
-    return fetch(url, options).then(res => res.json())
 }
 
 

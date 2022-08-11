@@ -533,13 +533,13 @@ To achieve this, we will create a Rest API using [Amazon API Gateway](https://aw
 Here we want to start by listing all the orders by doing a get request to the `getOrders` endpoint.
 
 
-**go to files:** [js](./webapp/src/main.js)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
 - [js fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 
 
-**file:** `./webapp/src/main.js`
+**file:** `./webapp/src/web-worker.js`
 **replace key:** `// [ ] 2.3.1: get orders from api`
 ```js
             // [x] 2.3.1: get orders from api
@@ -558,14 +558,14 @@ Here we want to start by listing all the orders by doing a get request to the `g
 **description:** Now, we want to be able to send a new order to the api, we will use the same JS Fetch api to `POST` the new order.
 
 
-**go to files:** [js](./webapp/src/main.js)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
 - [js fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) 
 
 
-**file:** `./webapp/src/main.js`
+**file:** `./webapp/src/web-worker.js`
 **replace key:** `// [ ] 2.3.2: send the order to the api`
 ```js
             // [x] 2.3.2: send the order to the api

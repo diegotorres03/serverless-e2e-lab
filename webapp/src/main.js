@@ -101,29 +101,14 @@ function createOrder(apiUrl, order) {
     const url = apiUrl + 'orders'
 
     // [ ] 2.3.2: send the order to the api
-    const options = {
-        method: 'POST',
-        body: JSON.stringify(order),
-        headers: {
-            'Content-Type': 'application/json',
 
-            // [ ] 5.3.2 use Authorization header on http createOrder
-            'Authorization': 'json.web.token'
-        }
-    }
-
-    return fetch(url, options).then(res => res.json())
 }
 
 
 async function getOrders(apiUrl) {
     const url = `${apiUrl}orders`
+    let orders = []
     // [ ] 2.3.1: get orders from api
-    const orders = await fetch(url,
-
-        // [ ] 5.3.1 use Authorization header on http getOrders
-        { headers: { 'Authorization': 'json.web.token' } }
-    ).then(res => res.json())
     return orders
 }
 
