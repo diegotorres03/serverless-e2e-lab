@@ -252,10 +252,10 @@ import { RestApiStack } from '../lib/api-stack'
 **file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// creating RestApiStack`
 ```ts
-    // creating RestApiStack
-    const restApi = new RestApiStack(app, 'api', {
-        env: { region }
-    })
+// creating RestApiStack
+const restApi = new RestApiStack(app, 'api', {
+    env: { region }
+})
 ```
 
 **file:** `./infraestructure-py/app.py`
@@ -637,10 +637,10 @@ import { BackendStack } from '../lib/backend-stack'
 **file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// creating BackendStack`
 ```ts
-    // creating BackendStack
-    const backend = new BackendStack(app, 'backend', {
-        env: { region }
-    })
+// creating BackendStack
+const backend = new BackendStack(app, 'backend', {
+    env: { region }
+})
 ```
 
 
