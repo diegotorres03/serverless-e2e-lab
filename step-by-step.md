@@ -468,9 +468,9 @@ To achieve this, we will create a Rest API using [Amazon API Gateway](https://aw
         // [x] 2.2.2: create /orders resource [POST, GET]
         const ordersEndpoint = api.root.addResource('orders')
         ordersEndpoint.addMethod('GET', new ApiGateway
-            .LambdaIntegration(getOrdersLambda, { proxy: true }), { authorizer })
+            .LambdaIntegration(getOrdersLambda, { proxy: true }), /* 5.2.2 */)
         ordersEndpoint.addMethod('POST', new ApiGateway
-            .LambdaIntegration(createOrderLambda, { proxy: true }), { authorizer })
+            .LambdaIntegration(createOrderLambda, { proxy: true }), /* 5.2.2 */)
 
 ```
 
@@ -509,7 +509,7 @@ To achieve this, we will create a Rest API using [Amazon API Gateway](https://aw
         const singleOrderEndpoint = ordersEndpoint.addResource('{customer}').addResource('{id}')
         singleOrderEndpoint
             .addMethod('PATCH', new ApiGateway
-            .LambdaIntegration(updateOrderLambda, { proxy: true }), { authorizer })
+            .LambdaIntegration(updateOrderLambda, { proxy: true }), /* 5.2.2 */)
 
 ```
 
@@ -1200,18 +1200,27 @@ _note: then next updates are set up for next chapter_
 **documentaion:**
 - topic [TypeScript]() | [Python]() 
 
-**file:** ``
-**replace key:** ``
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `// [ ] 5.2.2 add authorizer to private endpoints`
 ```ts
+        // [x] 5.2.2 add authorizer to private endpoints
         const authorizer = new ApiGateway.TokenAuthorizer(this, 'ordersAuthorizer', {
             handler: authorizerLambda
         })
 ```
 
 
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `/* 5.2.2 */`
+```ts
+{ authorizer }
+```
+
+
+
 ---
 
-# 5.3.1: `use `Authorization` header on http getOrders`
+# 5.3.1: `use Authorization header on http getOrders`
 
 
 **description:** . 
@@ -1232,7 +1241,7 @@ _note: then next updates are set up for next chapter_
 
 ---
 
-# 5.3.1: `use `Authorization` header on http createOrder`
+# 5.3.1: `use Authorization header on http createOrder`
 
 
 **description:** . 
