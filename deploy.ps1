@@ -1,6 +1,8 @@
 Write-Host 'Running infra'
-# Set-Location infraestructure
-Set-Location .\infraestructure-py
+
+
+# Set-Location .\infraestructure-py
+Set-Location infraestructure
 . .\deploy.ps1
 Set-Location ..
 
