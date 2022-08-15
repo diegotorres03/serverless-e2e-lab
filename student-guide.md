@@ -1,15 +1,54 @@
+# Serverless e2e Immersion Day
+Welcome to the Serverless End to End immersion day.
+
+We invite you to join us on an adventure where we discover how a modern application comes to life. Our journey will begin in the browser, where we will deliver the best possible experience to our customers by leveraging the most up-to-date features modern browsers have to offer.
+
+The next stop on our trip will be in the AWS cloud where we will open the gates to our webapp, allowing it to talk to our backends.
+
+Next, let’s make it persistent. We will be exploring Serverless databases to allow us to scale as needed with no downtime. Only have a few users? No problem. A few million users? Still no problem. Code once, and scale in and out as you please.
+
+Is that it?!
+
+Well... no.
+
+We will next discover the wonders of event driven architectures, where instead of coordinating steps between multiple systems, we will enable systems to subscribe to the event sources they need. This allows for flexible architecture that can change as the business needs change. You might be wondering - how can we protect all that we have created?? Don’t worry, we have you covered. In the last stage of our journey, we will secure our application and infrastructure so that we can sleep in peace.
+
+Get ready for the adventure!!
+
+
+
 # Requirements:
 In order to properly run this lab, we will require the following applications:
 - [Powershell v7](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2)
 - [Node.js v14](https://nodejs.org/en/download/)
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions)
 - [Git client](https://git-scm.com/download/win)
+- [VS code](https://code.visualstudio.com/download)
+
+
+
+# Agenda
+
+### Day 1
+- Introdunction to serverless 30m
+- Progressive Web Applications 1h30
+- Serverles Rest APIs on AWS 1h
+- Q&A 30m
+
+### Day2
+- Welcome back 30m
+- Serverless Databases 45m
+- Integration Services 45m
+- Security 45m
+- Q&A 30m
+- Wrap up 30m
+
 
 
 
 # Before the lab
 1. clone [Serverless-e2e-lab](https://github.com/diegotorres03/serverless-e2e-lab) by running `git clone https://github.com/diegotorres03/serverless-e2e-lab.git`  in Powershell.
-2. 
+2. on Powershell cd in to `infraestructure` if you want to use Typescript or in `infraestructure-py` yf you want do use Python, then run `cdk bootstrap`
 
 ---
 
@@ -136,14 +175,14 @@ _note: then next updates are set up for next chapter_
 
 
 **description:** Now we will create the api that will handle all the orders from our webapp.
-First we need to create thelambda functions that will handle each individual api route.
+First we need to create the lambda functions that will handle each individual api route.
 Let's begin with the `getOrders` function, on the CDK file, create a lambda function and set the code path to `../functions/get-orders`.
 
 
 _runtime:_ `node 14`
 
 
-**go to files:** [js](./functions/get-orders/index.js)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
@@ -170,7 +209,7 @@ _runtime:_ `node 14`
 _runtime:_ `node 14`
 
 
-**go to files:** [js](./functions/create-order/index.js)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
@@ -195,7 +234,7 @@ _runtime:_ `node 14`
 _runtime:_ `node 14`
 
 
-**go to files:** [js](./functions/update-order/index.js)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 **documentaion:**
 - Lambda Function [TypeScript](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Function.html) | [Python](https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_lambda/Function.html) 
@@ -294,7 +333,7 @@ To achieve this, we will create a Rest API using [Amazon API Gateway](https://aw
 Here we want to start by listing all the orders by doing a get request to the `getOrders` endpoint.
 
 
-**go to files:** [js](./webapp/src/main.js)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
@@ -313,7 +352,7 @@ Here we want to start by listing all the orders by doing a get request to the `g
 **description:** Now, we want to be able to send a new order to the api, we will use the same JS Fetch api to `POST` the new order.
 
 
-**go to files:** [js](./webapp/src/main.js)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
@@ -605,10 +644,10 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 # 4.3.2: `set lambda 4.2.2 as handler for sqs queue messages`
 
 
-**description:** . 
+**description:** 
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
+**go to files:** [ts](./infraestructure/lib/backend-stack.ts) | [py](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 **documentaion:**
@@ -631,14 +670,17 @@ _note: then next updates are set up for next chapter_
 # 5.1.1: `create authenticate lambda function`
 
 
-**description:** . 
+**description:** This lambda will verify user credentials and return a JSON Web Token (JWT). 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
 - Lambda Function [TypeScript](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Function.html) | [Python](https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_lambda/Function.html) 
+
+
+
 
 
 
@@ -650,10 +692,12 @@ _note: then next updates are set up for next chapter_
 # 5.1.2: `create an endpoint for authentication`
 
 
-**description:** . 
+**description:** in order to log in, we will require a new endpoint, you are familiar with this process, go ahead ;) 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
+
+
 
 
 **documentaion:**
@@ -669,10 +713,10 @@ _note: then next updates are set up for next chapter_
 # 5.2.1: `create the custom authorizer`
 
 
-**description:** . 
+**description:** An authorizer is a middleware on the api gateway that can verify a token/header to verify user is logged in and it has access to the requested resource. In this case for our custom authorizer, we will use a lambda function to verify the token.
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
@@ -691,7 +735,7 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
@@ -702,15 +746,21 @@ _note: then next updates are set up for next chapter_
 
 
 
+
+
+
+
+
+
 ---
 
-# 5.3.1: `use `Authorization` header on http getOrders`
+# 5.3.1: `use Authorization header on http getOrders`
 
 
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
@@ -723,13 +773,13 @@ _note: then next updates are set up for next chapter_
 
 ---
 
-# 5.3.1: `use `Authorization` header on http createOrder`
+# 5.3.1: `use Authorization header on http createOrder`
 
 
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
@@ -748,7 +798,7 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/bin/infraestructure.ts) | [py](./infraestructure-py/app.py)
 
 
 **documentaion:**
@@ -767,7 +817,7 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/bin/infraestructure.ts) | [py](./infraestructure-py/app.py
 
 
 **documentaion:**

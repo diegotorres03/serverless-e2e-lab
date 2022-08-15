@@ -63,7 +63,7 @@
       {
         "path": "./webapp/deploy.ps1",
         "key": "#  [ ] 1.2.2: add command to invalidate cloudfront distribution",
-        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\ncloudfront create-invalidation --distribution-id $distributionId --paths '/*'\r\n"
+        "value": "\r\n#  [x] 1.2.2: add command to invalidate cloudfront distribution\r\naws cloudfront create-invalidation --distribution-id $distributionId --paths '/*'\r\n"
       },
       {
         "path": "./infraestructure/lib/backend-stack.ts",
@@ -78,12 +78,12 @@
       {
         "path": "./infraestructure-py/app.py",
         "key": "# imports",
-        "value": "\r\n    from infraestructure_python.api_stack import ApiStack\r\n    # imports\r\n"
+        "value": "\r\nfrom infraestructure_python.api_stack import ApiStack\r\n# imports\r\n"
       },
       {
         "path": "./infraestructure-py/app.py",
         "key": "# creating RestApiStack",
-        "value": "\r\n    # creating RestApiStack\r\n    api = ApiStack(app, 'api-py', env=cdk.Environment(region=region))\r\n"
+        "value": "\r\n# creating RestApiStack\r\napi = ApiStack(app, 'api', env=cdk.Environment(region=region))\r\n"
       }
     ]
   },
@@ -99,7 +99,7 @@
       },
       {
         "path": "./infraestructure-py/infraestructure_python/api_stack.py",
-        "key": "#[ ] 2.1.1: create lambdas for getOrders",
+        "key": "# [ ] 2.1.1: create lambdas for getOrders",
         "value": "\r\n        # [x] 2.1.1: create lambdas for getOrders\r\n        get_orders_lambda = lambda_.Function(self, 'getOrders',\r\n            runtime=lambda_.Runtime.NODEJS_16_X,\r\n            handler='index.handler',\r\n            code=lambda_.Code.from_asset('../functions/get-orders')\r\n        )\r\n        # 3.1.2\r\n        # orders_table.grant_read_write_data(get_orders_lambda)\r\n        \r\n        CfnOutput(self, 'get_orders_lambda', value= get_orders_lambda.function_name)\r\n\r\n"
       }
     ]
@@ -163,7 +163,7 @@
       {
         "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.2.2: create /orders resource [POST, GET]",
-        "value": "\r\n        // [x] 2.2.2: create /orders resource [POST, GET]\r\n        const ordersEndpoint = api.root.addResource('orders')\r\n        ordersEndpoint.addMethod('GET', new ApiGateway\r\n            .LambdaIntegration(getOrdersLambda, { proxy: true }), { authorizer })\r\n        ordersEndpoint.addMethod('POST', new ApiGateway\r\n            .LambdaIntegration(createOrderLambda, { proxy: true }), { authorizer })\r\n\r\n"
+        "value": "\r\n        // [x] 2.2.2: create /orders resource [POST, GET]\r\n        const ordersEndpoint = api.root.addResource('orders')\r\n        ordersEndpoint.addMethod('GET', new ApiGateway\r\n            .LambdaIntegration(getOrdersLambda, { proxy: true }), /* 5.2.2 */)\r\n        ordersEndpoint.addMethod('POST', new ApiGateway\r\n            .LambdaIntegration(createOrderLambda, { proxy: true }), /* 5.2.2 */)\r\n\r\n"
       },
       {
         "path": "./infraestructure-py/infraestructure_python/api_stack.py",
@@ -180,7 +180,7 @@
       {
         "path": "./infraestructure/lib/api-stack.ts",
         "key": "// [ ] 2.2.3: create /orders/{customer}/{id}",
-        "value": "\r\n        // [x] 2.2.3: create /orders/{customer}/{id}\r\n        const singleOrderEndpoint = ordersEndpoint.addResource('{customer}').addResource('{id}')\r\n        singleOrderEndpoint\r\n            .addMethod('PATCH', new ApiGateway\r\n            .LambdaIntegration(updateOrderLambda, { proxy: true }), { authorizer })\r\n\r\n"
+        "value": "\r\n        // [x] 2.2.3: create /orders/{customer}/{id}\r\n        const singleOrderEndpoint = ordersEndpoint.addResource('{customer}').addResource('{id}')\r\n        singleOrderEndpoint\r\n            .addMethod('PATCH', new ApiGateway\r\n            .LambdaIntegration(updateOrderLambda, { proxy: true }), /* 5.2.2 */)\r\n\r\n"
       },
       {
         "path": "./infraestructure-py/infraestructure_python/api_stack.py",
@@ -195,7 +195,7 @@
     "todo": "2.3.1",
     "content": [
       {
-        "path": "./webapp/src/main.js",
+        "path": "./webapp/src/web-worker.js",
         "key": "// [ ] 2.3.1: get orders from api",
         "value": "\r\n            // [x] 2.3.1: get orders from api\r\n            orders = await fetch(url, options, {\r\n                'Content-Type': 'application/json', // 'text/html',\r\n                // [ ] 5.3.1 use Authorization header on http getOrders\r\n            })\r\n"
       }
@@ -207,7 +207,7 @@
     "todo": "2.3.2",
     "content": [
       {
-        "path": "./webapp/src/main.js",
+        "path": "./webapp/src/web-worker.js",
         "key": "// [ ] 2.3.2: send the order to the api",
         "value": "\r\n            // [x] 2.3.2: send the order to the api\r\n            const options = {\r\n                method: 'POST',\r\n                body: JSON.stringify({\r\n                    id: order.id,\r\n                    customer: order.customer,\r\n                    items: order.items,\r\n                }),\r\n                headers: {\r\n                    'Content-Type': 'application/json',\r\n                    // [ ] 5.3.2 use Authorization header on http createOrder\r\n                }\r\n            }\r\n\r\n            await fetch(url, options)\r\n"
       },
@@ -224,12 +224,12 @@
       {
         "path": "./infraestructure-py/app.py",
         "key": "# imports",
-        "value": "\r\n    from infraestructure_python.backend_stack import BackendStack\r\n    # imports\r\n"
+        "value": "\r\nfrom infraestructure_python.backend_stack import BackendStack\r\n# imports\r\n"
       },
       {
         "path": "./infraestructure-py/app.py",
         "key": "# creating RestApiStack",
-        "value": "\r\n    # creating RestApiStack\r\n    backend = BackendStack(app, 'backend-py', env=cdk.Environment(region=region))\r\n"
+        "value": "\r\n# creating RestApiStack\r\nbackend = BackendStack(app, 'backend', env=cdk.Environment(region=region))\r\n"
       }
     ]
   },
@@ -240,13 +240,13 @@
     "content": [
       {
         "path": "./infraestructure/lib/backend-stack.ts",
-        "key": "// [x] 3.1.1: create DynamoDB orders table",
-        "value": "\r\n        const ordersTable = new DynamoDB.Table(this, 'orders', {\r\n            partitionKey: { name: 'customer', type: DynamoDB.AttributeType.STRING },\r\n            sortKey: { name: 'id', type: DynamoDB.AttributeType.STRING },\r\n            billingMode: DynamoDB.BillingMode.PAY_PER_REQUEST,\r\n            stream: DynamoDB.StreamViewType.NEW_AND_OLD_IMAGES,\r\n            timeToLiveAttribute,\r\n            removalPolicy: RemovalPolicy.DESTROY,\r\n        })\r\n\r\n"
+        "key": "// [ ] 3.1.1: create DynamoDB orders table",
+        "value": "\r\n        // [x] 3.1.1: create DynamoDB orders table\r\n        const ordersTable = new DynamoDB.Table(this, 'orders', {\r\n            partitionKey: { name: 'customer', type: DynamoDB.AttributeType.STRING },\r\n            sortKey: { name: 'id', type: DynamoDB.AttributeType.STRING },\r\n            billingMode: DynamoDB.BillingMode.PAY_PER_REQUEST,\r\n            stream: DynamoDB.StreamViewType.NEW_AND_OLD_IMAGES,\r\n            timeToLiveAttribute,\r\n            removalPolicy: RemovalPolicy.DESTROY,\r\n        })\r\n\r\n"
       },
       {
         "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
-        "key": "# [x] 3.1.1: create DynamoDB orders table",
-        "value": "\r\n        orders_table = dynamo.Table(self, 'orders',\r\n            partition_key=dynamo.Attribute(name='customer', type=dynamo.AttributeType.STRING),\r\n            sort_key=dynamo.Attribute(name='id', type=dynamo.AttributeType.STRING),\r\n            billing_mode=dynamo.BillingMode.PAY_PER_REQUEST,\r\n            stream=dynamo.StreamViewType.NEW_AND_OLD_IMAGES,\r\n            time_to_live_attribute=time_to_live_attribute,\r\n            removal_policy=RemovalPolicy.DESTROY\r\n        )\r\n"
+        "key": "# [ ] 3.1.1: create DynamoDB orders table",
+        "value": "\r\n        # [x] 3.1.1: create DynamoDB orders table\r\n        orders_table = dynamo.Table(self, 'orders',\r\n            partition_key=dynamo.Attribute(name='customer', type=dynamo.AttributeType.STRING),\r\n            sort_key=dynamo.Attribute(name='id', type=dynamo.AttributeType.STRING),\r\n            billing_mode=dynamo.BillingMode.PAY_PER_REQUEST,\r\n            stream=dynamo.StreamViewType.NEW_AND_OLD_IMAGES,\r\n            time_to_live_attribute=time_to_live_attribute,\r\n            removal_policy=RemovalPolicy.DESTROY\r\n        )\r\n"
       }
     ]
   },
@@ -335,8 +335,8 @@
       },
       {
         "path": "./infraestructure-py/infraestructure_python/backend_stack.py",
-        "key": "",
-        "value": "\r\n        # [ ] 4.1.1: create processing orders queue\r\n        orders_queue = sqs.Queue(self, 'ordersQueue', \r\n            visibility_timeout=Duration.seconds(60)\r\n        )\r\n\r\n"
+        "key": "# [ ] 4.1.1: create processing orders queue",
+        "value": "\r\n        # [x] 4.1.1: create processing orders queue\r\n        orders_queue = sqs.Queue(self, 'ordersQueue', \r\n            visibility_timeout=Duration.seconds(60)\r\n        )\r\n\r\n"
       }
     ]
   },
@@ -431,9 +431,14 @@
     "todo": "5.1.1",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "// [ ] 5.1.1 create authenticate lambda function",
+        "value": "\r\n        // [x] 5.1.1 create authenticate lambda function\r\n        const authenticateLambda = new Lambda.Function(this, 'authenticate', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            code: Lambda.Code.fromAsset('../functions/authenticate'),\r\n            handler: 'index.handler',\r\n        })\r\n        new CfnOutput(this, 'authenticateLambda', { value: authenticateLambda.functionName })\r\n\r\n"
+      },
+      {
+        "path": "./infraestructure-py/infraestructure_python/api_stack.py",
+        "key": "# [ ] 5.1.1 create authenticate lambda function",
+        "value": "\r\n     \r\n"
       }
     ]
   },
@@ -443,9 +448,9 @@
     "todo": "5.1.2",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "// [ ] 5.1.2 create an endpoint for authentication",
+        "value": "\r\n        // [x] 5.1.2 create an endpoint for authentication\r\n        const authEndpoint = api.root\r\n            .addResource('authenticate')\r\n            .addMethod('POST', new ApiGateway.LambdaIntegration(authenticateLambda, { proxy: true }))\r\n"
       }
     ]
   },
@@ -455,9 +460,9 @@
     "todo": "5.2.1",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "// [ ] 5.2.1 create the custom authorizer",
+        "value": "\r\n        // [x] 5.2.1 create the custom authorizer\r\n        const authorizerLambda = new Lambda.Function(this, 'authorize', {\r\n            runtime: Lambda.Runtime.NODEJS_14_X,\r\n            code: Lambda.Code.fromAsset('../functions/authorize'),\r\n            handler: 'index.handler',\r\n        })\r\n        new CfnOutput(this, 'authorizerLambda', { value: authorizerLambda.functionName })\r\n\r\n"
       }
     ]
   },
@@ -467,21 +472,26 @@
     "todo": "5.2.2",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "// [ ] 5.2.2 add authorizer to private endpoints",
+        "value": "\r\n        // [x] 5.2.2 add authorizer to private endpoints\r\n        const authorizer = new ApiGateway.TokenAuthorizer(this, 'ordersAuthorizer', {\r\n            handler: authorizerLambda\r\n        })\r\n"
+      },
+      {
+        "path": "./infraestructure/lib/api-stack.ts",
+        "key": "/* 5.2.2 */",
+        "value": "\r\n{ authorizer }\r\n"
       }
     ]
   },
   "5.3.1": {
-    "task": "use `Authorization` header on http createOrder",
+    "task": "use Authorization header on http createOrder",
     "branch": "git checkout -b md5.3.1",
     "todo": "5.3.1",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./webapp/src/web-worker.js",
+        "key": "// [ ] 5.3.2 use Authorization header on http createOrder",
+        "value": "\r\n// [ ] 5.3.2 use Authorization header on http createOrder\r\n            'Authorization': 'json.web.token'\r\n"
       }
     ]
   },
@@ -491,9 +501,9 @@
     "todo": "5.4.1",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./infraestructure/bin/infraestructure.ts",
+        "key": "// [ ] 5.4.1  define Policy Boundary",
+        "value": "\r\nconst boundary = (stackParam: IConstruct) => new cdk.aws_iam.ManagedPolicy(stackParam, 'permissions-boundary', {\r\n  statements: [\r\n    new cdk.aws_iam.PolicyStatement({\r\n      effect: cdk.aws_iam.Effect.DENY,\r\n      actions: ['iam:GetUser'],\r\n      resources: ['*'],\r\n    }),\r\n  ],\r\n})\r\n"
       }
     ]
   },
@@ -503,9 +513,9 @@
     "todo": "5.4.2",
     "content": [
       {
-        "path": "",
-        "key": "",
-        "value": "\r\n\r\n"
+        "path": "./infraestructure/bin/infraestructure.ts",
+        "key": "// [ ] 5.4.2 attach boundary to all constructs",
+        "value": "\r\ncdk.aws_iam.PermissionsBoundary\r\n  .of(backend)\r\n  .apply(boundary(backend))\r\n\r\n\r\ncdk.aws_iam.PermissionsBoundary\r\n  .of(api)\r\n  .apply(boundary(api))\r\n\r\n\r\ncdk.aws_iam.PermissionsBoundary\r\n  .of(webapp)\r\n  .apply(boundary(webapp))\r\n\r\n"
       }
     ]
   }
