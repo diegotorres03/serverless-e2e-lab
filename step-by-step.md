@@ -245,8 +245,8 @@ _note: then next updates are set up for next chapter_
 **file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// imports`
 ```ts
-    RestApiStack,
-    // imports
+import { RestApiStack } from '../lib/api-stack'
+// imports
 ```
 
 **file:** `./infraestructure/bin/infraestructure.ts`
@@ -254,7 +254,7 @@ _note: then next updates are set up for next chapter_
 ```ts
     // creating RestApiStack
     const restApi = new RestApiStack(app, 'api', {
-        env: { region: }
+        env: { region }
     })
 ```
 
@@ -630,8 +630,8 @@ _note: then next updates are set up for next chapter_
 **file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// imports`
 ```ts
-    BackendStack,
-    // imports
+import { BackendStack } from '../lib/backend-stack'
+// imports
 ```
 
 **file:** `./infraestructure/bin/infraestructure.ts`
