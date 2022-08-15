@@ -20,12 +20,8 @@ function command(commands) {
         const ls = exec(commands, (error, stdout, stderr) => {
             if (error) {
                 return reject(error)
-                // console.log(error.stack)
-                // console.log('Error code: ' + error.code)
-                // console.log('Signal received: ' + error.signal)
             }
-            console.log('STDOUT: ' + stdout)
-            // console.log('Child Process STDERR: ' + stderr)
+            // console.log('STDOUT: ' + stdout)
             resolve({ stderr, stdout })
         })
 
@@ -88,21 +84,21 @@ async function setUpPkgNavigation(chapter, chapters, index) {
     const next = index >= chapters.length - 1 ? 0 : index + 1
     // read package.json
     const pkg = JSON.parse(await readFile('./package.json'))
-    console.log('prev', prev, 'next', next)
+    // console.log('prev', prev, 'next', next)
     // update scripts.[next, back] 
     pkg.scripts.next = `git checkout ${prefix}${chapters[next]}`
     pkg.scripts.back = `git checkout ${prefix}${chapters[prev]}`
     // overwrite package
-    console.log(pkg)
+    // console.log(pkg)
     await writeFile('./package.json', JSON.stringify(pkg, null, 2))
 }
 
 
 async function updateFiles(branches, current) {
-    console.log(branches[current].content)
+    // console.log(branches[current].content)
     const update = await updateFile(branches, current)
     for (let file of branches[current].content) {
-        console.log('file', file, update)
+        // console.log('file', file, update)
         await update(file)
     }
 }
