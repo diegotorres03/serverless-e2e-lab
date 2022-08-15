@@ -1226,16 +1226,21 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
 - [AWS CLI S3](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/cp.html) 
 
-**file:** ``
-**replace key:** ``
-```
-
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `// [ ] 5.3.1 use Authorization header on http getOrders`
+```js
+        // [x] 5.3.1 use Authorization header on http getOrders
+        {
+            headers: {
+                'Authorization': token, //'json.web.token', 
+            }
+        }
 ```
 
 
@@ -1247,16 +1252,17 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [js](./webapp/src/web-worker.js)
 
 
 **documentaion:**
 - [AWS CLI S3](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/cp.html) 
 
-**file:** ``
-**replace key:** ``
-```
-
+**file:** `./webapp/src/web-worker.js`
+**replace key:** `// [ ] 5.3.2 use Authorization header on http createOrder`
+```js
+// [ ] 5.3.2 use Authorization header on http createOrder
+            'Authorization': 'json.web.token'
 ```
 
 
@@ -1268,16 +1274,24 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/bin/infraestructure.ts) | [py](./infraestructure-py/app.py)
 
 
 **documentaion:**
 - [AWS CLI S3](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/cp.html) 
 
-**file:** ``
-**replace key:** ``
-```
-
+**file:** `./infraestructure/bin/infraestructure.ts`
+**replace key:** `// [ ] 5.4.1  define Policy Boundary`
+```ts
+const boundary = (stackParam: IConstruct) => new cdk.aws_iam.ManagedPolicy(stackParam, 'permissions-boundary', {
+  statements: [
+    new cdk.aws_iam.PolicyStatement({
+      effect: cdk.aws_iam.Effect.DENY,
+      actions: ['iam:GetUser'],
+      resources: ['*'],
+    }),
+  ],
+})
 ```
 
 
@@ -1289,14 +1303,27 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/bin/infraestructure.ts) | [py](./infraestructure-py/app.py
 
 
 **documentaion:**
 - [AWS CLI S3](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/cp.html) 
 
-**file:** ``
-**replace key:** ``
-```
+**file:** `./infraestructure/bin/infraestructure.ts`
+**replace key:** `// [ ] 5.4.2 attach boundary to all constructs`
+```ts
+cdk.aws_iam.PermissionsBoundary
+  .of(backend)
+  .apply(boundary(backend))
+
+
+cdk.aws_iam.PermissionsBoundary
+  .of(api)
+  .apply(boundary(api))
+
+
+cdk.aws_iam.PermissionsBoundary
+  .of(webapp)
+  .apply(boundary(webapp))
 
 ```
