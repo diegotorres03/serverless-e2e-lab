@@ -1323,6 +1323,7 @@ _note: then next updates are set up for next chapter_
 **file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// [ ] 5.4.1  define Policy Boundary`
 ```ts
+// [x] 5.4.1  define Policy Boundary
 const boundary = (stackParam: IConstruct) => new cdk.aws_iam.ManagedPolicy(stackParam, 'permissions-boundary', {
   statements: [
     new cdk.aws_iam.PolicyStatement({
@@ -1352,6 +1353,7 @@ const boundary = (stackParam: IConstruct) => new cdk.aws_iam.ManagedPolicy(stack
 **file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// [ ] 5.4.2 attach boundary to all constructs`
 ```ts
+// [x] 5.4.2 attach boundary to all constructs
 cdk.aws_iam.PermissionsBoundary
   .of(backend)
   .apply(boundary(backend))
@@ -1366,4 +1368,18 @@ cdk.aws_iam.PermissionsBoundary
   .of(webapp)
   .apply(boundary(webapp))
 
+// done
+
+```
+
+
+
+---
+
+# 0.0.0: `You are All set`
+
+**file:** `./infraestructure/bin/infraestructure.ts`
+**replace key:** `// done`
+```ts
+// done
 ```
