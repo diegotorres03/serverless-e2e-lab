@@ -242,14 +242,14 @@ aws cloudfront create-invalidation --distribution-id $distributionId --paths '/*
 
 _note: then next updates are set up for next chapter_
 
-**file:** `./infraestructure/lib/backend-stack.ts`
+**file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// imports`
 ```ts
     RestApiStack,
     // imports
 ```
 
-**file:** `./infraestructure/lib/backend-stack.ts`
+**file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// creating RestApiStack`
 ```ts
     // creating RestApiStack
@@ -627,14 +627,14 @@ Here we want to start by listing all the orders by doing a get request to the `g
 
 _note: then next updates are set up for next chapter_
 
-**file:** `./infraestructure/lib/backend-stack.ts`
+**file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// imports`
 ```ts
     BackendStack,
     // imports
 ```
 
-**file:** `./infraestructure/lib/backend-stack.ts`
+**file:** `./infraestructure/bin/infraestructure.ts`
 **replace key:** `// creating BackendStack`
 ```ts
     // creating BackendStack
