@@ -1064,10 +1064,10 @@ First, lets create an [SQS Queue](https://aws.amazon.com/sqs/)
 # 4.3.2: `set lambda 4.2.2 as handler for sqs queue messages`
 
 
-**description:** . 
+**description:** 
 
 
-**go to files:** [TypeScript](./infraestructure/lib/backend-stack.ts) | [Python](./infraestructure-py/infraestructure_python/backend_stack.py)
+**go to files:** [ts](./infraestructure/lib/backend-stack.ts) | [py](./infraestructure-py/infraestructure_python/backend_stack.py)
 
 
 **documentaion:**
@@ -1104,40 +1104,57 @@ _note: then next updates are set up for next chapter_
 # 5.1.1: `create authenticate lambda function`
 
 
-**description:** . 
+**description:** This lambda will verify user credentials and return a JSON Web Token (JWT). 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
 - Lambda Function [TypeScript](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Function.html) | [Python](https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_lambda/Function.html) 
 
-**file:** ``
-**replace key:** ``
-```
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `// [ ] 5.1.1 create authenticate lambda function`
+```ts
+        // [x] 5.1.1 create authenticate lambda function
+        const authenticateLambda = new Lambda.Function(this, 'authenticate', {
+            runtime: Lambda.Runtime.NODEJS_14_X,
+            code: Lambda.Code.fromAsset('../functions/authenticate'),
+            handler: 'index.handler',
+        })
+        new CfnOutput(this, 'authenticateLambda', { value: authenticateLambda.functionName })
 
 ```
 
+**file:** `./infraestructure-py/infraestructure_python/api_stack.py`
+**replace key:** `# [ ] 5.1.1 create authenticate lambda function`
+```py
+     
+```
 
 ---
 
-# 5.1.2: `create an endpoint fot authentication`
+# 5.1.2: `create an endpoint for authentication`
 
 
-**description:** . 
+**description:** in order to log in, we will require a new endpoint, you are familiar with this process, go ahead ;) 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
+
+
 
 
 **documentaion:**
 - topic [TypeScript]() | [Python]() 
 
-**file:** ``
-**replace key:** ``
-```
-
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `// [ ] 5.1.2 create an endpoint for authentication`
+```ts
+        // [x] 5.1.2 create an endpoint for authentication
+        const authEndpoint = api.root
+            .addResource('authenticate')
+            .addMethod('POST', new ApiGateway.LambdaIntegration(authenticateLambda, { proxy: true }))
 ```
 
 
@@ -1146,18 +1163,25 @@ _note: then next updates are set up for next chapter_
 # 5.2.1: `create the custom authorizer`
 
 
-**description:** . 
+**description:** An authorizer is a middleware on the api gateway that can verify a token/header to verify user is logged in and it has access to the requested resource. In this case for our custom authorizer, we will use a lambda function to verify the token.
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
 - topic [TypeScript]() | [Python]() 
 
-**file:** ``
-**replace key:** ``
-```
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `// [ ] 5.2.1 create the custom authorizer`
+```ts
+        // [x] 5.2.1 create the custom authorizer
+        const authorizerLambda = new Lambda.Function(this, 'authorize', {
+            runtime: Lambda.Runtime.NODEJS_14_X,
+            code: Lambda.Code.fromAsset('../functions/authorize'),
+            handler: 'index.handler',
+        })
+        new CfnOutput(this, 'authorizerLambda', { value: authorizerLambda.functionName })
 
 ```
 
@@ -1170,7 +1194,7 @@ _note: then next updates are set up for next chapter_
 **description:** . 
 
 
-**go to files:** [ps1](./webapp/deploy.ps1)
+**go to files:** [ts](./infraestructure/lib/api-stack.ts) | [py](./infraestructure-py/infraestructure_python/api_stack.py)
 
 
 **documentaion:**
@@ -1178,8 +1202,10 @@ _note: then next updates are set up for next chapter_
 
 **file:** ``
 **replace key:** ``
-```
-
+```ts
+        const authorizer = new ApiGateway.TokenAuthorizer(this, 'ordersAuthorizer', {
+            handler: authorizerLambda
+        })
 ```
 
 

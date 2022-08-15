@@ -647,7 +647,7 @@ _note: then next updates are set up for next chapter_
 
 ---
 
-# 5.1.2: `create an endpoint fot authentication`
+# 5.1.2: `create an endpoint for authentication`
 
 
 **description:** . 

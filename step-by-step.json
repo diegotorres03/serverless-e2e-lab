@@ -438,7 +438,7 @@
     ]
   },
   "5.1.2": {
-    "task": "create an endpoint fot authentication",
+    "task": "create an endpoint for authentication",
     "branch": "git checkout -b md5.1.2",
     "todo": "5.1.2",
     "content": [

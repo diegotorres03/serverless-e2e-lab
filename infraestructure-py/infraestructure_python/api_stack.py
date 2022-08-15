@@ -29,10 +29,11 @@ class ApiStack(Stack):
         # [ ] 3.1.2: grant lambda access to dynamo table 
 
         # [ ] 5.1.1 create authenticate lambda function
-        
+        # [ ] 5.2.1 create the custom authorizer
+
         # [ ] 2.2.1: create api
 
-        # [ ] 5.1.2 create an endpoint fot authentication
+        # [ ] 5.1.2 create an endpoint for authentication
         # [ ] 5.2.2 add authorizer to private endpoints
         
         # [ ] 2.2.2: create /orders resource [POST, GET]
