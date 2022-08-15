@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 import 'source-map-support/register'
 import * as cdk from 'aws-cdk-lib'
-import { WebAppStack } from '../lib/webapp-stack'
-// imports
+import {
+  WebAppStack,
+  // imports
+} from '../lib/webapp-stack'
 import { IConstruct } from 'constructs'
 
 const app = new cdk.App()
 
-const region  = process.env.AWS_REGION
+const region = process.env.AWS_REGION
 
 // creating WebAppStack
 const webapp = new WebAppStack(app, 'webapp', {
