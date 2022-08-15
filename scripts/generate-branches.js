@@ -154,7 +154,7 @@ async function run() {
         await wait(200)
 
         const readme = await generateReadme(branchData, branchData[id].todo)
-        console.log(readme)
+        // console.log(readme)
         await writeFile('./README.out.md', readme)
 
         await wait(200)
