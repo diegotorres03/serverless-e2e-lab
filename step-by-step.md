@@ -253,7 +253,7 @@ import { RestApiStack } from '../lib/api-stack'
 **replace key:** `// creating RestApiStack`
 ```ts
 // creating RestApiStack
-const restApi = new RestApiStack(app, 'api', {
+const api = new RestApiStack(app, 'api', {
     env: { region }
 })
 ```
