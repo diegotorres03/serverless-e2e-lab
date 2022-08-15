@@ -17,6 +17,7 @@ Get ready for the adventure!!
 
 
 
+
 # Requirements:
 In order to properly run this lab, we will require the following applications:
 - [Powershell v7](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2)
@@ -1285,7 +1286,7 @@ _note: then next updates are set up for next chapter_
 
 ---
 
-# 5.3.1: `use Authorization header on http createOrder`
+# 5.3.2: `use Authorization header on http createOrder`
 
 
 **description:** . 
