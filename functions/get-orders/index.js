@@ -66,29 +66,31 @@ function toJson(orders) {
     return JSON.stringify(orders)
 }
 
+// README: [apidoc](https://apidocjs.com)
+
 /**
- * 
- * @api {GET} /orders getOrders
- * @apiName cafe
- * @apiGroup group
- * @apiVersion  1.1.1
+ * @api {get} /orders list existing orders
+ * @apiName GetOrders
+ * @apiGroup Orders
  * 
  * 
- * 
- * @apiSuccess (200) {type} name description
- * 
- * @apiParamExample  {type} Request-Example:
- * {
- *     property : value
- * }
- * 
- * 
- * @apiSuccessExample {type} Success-Response:
- * {
- *     property : value
- * }
- * 
- * 
+ * @apiSuccess (200) {Order[]} data the newly created order
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [{
+ *        "username": "alejo",
+ *        "date": "1656017418934",
+ *        "notes": [
+ *         "sample text"
+ *        ],
+ *        "options": {
+ *         "bowType": "recurve",
+ *         "category": "junior",
+ *         "gender": "male"
+ *        },
+ *        "value": 90,
+ *        "_autoapprove": 1656018019
+ *     }]
  */
 async function handler(event) {
     const eventJson = JSON.stringify(event, null, 2)

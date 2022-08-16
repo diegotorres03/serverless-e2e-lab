@@ -18,38 +18,39 @@ Get ready for the adventure!!
 
 
 
-# Requirements:
-In order to properly run this lab, we will require the following applications:
-- [Powershell v7](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2)
-- [Node.js v14](https://nodejs.org/en/download/)
-- [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions)
-- [Git client](https://git-scm.com/download/win)
-- [VS code](https://code.visualstudio.com/download)
-
+# Before we begin:
+In order to properly run this lab, we will be using the first hour to install the following applications:
+- [VS code](https://code.visualstudio.com/download) Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications.
+- [Git client](https://git-scm.com/download/win) Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+- [Node.js v14](https://nodejs.org/en/download/) As an asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications.
+- [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions) The AWS Command Line Interface (AWS CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts.
+- [AWS CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) The AWS Cloud Development Kit (AWS CDK) is an open-source software development framework to define your cloud application resources using familiar programing languages.
 
 
 # Agenda
 
 ### Day 1
-- Introdunction to serverless 30m
-- Progressive Web Applications 1h30
-- Serverles Rest APIs on AWS 1h
+- Account setup
+- Introdunction to serverless
+- Progressive Web Applications
+- Serverles Rest APIs on AWS
 - Q&A 30m
 
 ### Day2
-- Welcome back 30m
-- Serverless Databases 45m
-- Integration Services 45m
-- Security 45m
-- Q&A 30m
-- Wrap up 30m
+- Welcome back
+- Serverless Databases
+- Integration Services
+- Security
+- Q&A
+- Wrap up
 
 
 
 
-# Before the lab
+# Project Set Up
 1. clone [Serverless-e2e-lab](https://github.com/diegotorres03/serverless-e2e-lab) by running `git clone https://github.com/diegotorres03/serverless-e2e-lab.git`  in Powershell.
-2. on Powershell cd in to `infraestructure` if you want to use Typescript or in `infraestructure-py` yf you want do use Python, then run `cdk bootstrap`
+2. on Powershell cd in to `infraestructure` if you want to use Typescript or in `infraestructure-py` if you want do use Python, then run `cdk bootstrap`
+3. run `npm i -g apidoc`
 
 ---
 
