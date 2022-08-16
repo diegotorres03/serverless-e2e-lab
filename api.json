@@ -1,0 +1,11 @@
+{
+  "api": {
+    "apiUrl": "https://etuf2srkfh.execute-api.us-east-2.amazonaws.com/dev/",
+    "createOrderLambda": "api-createOrder36EBF614-AcfkfEd2nHxr",
+    "ordersApiEndpoint2C254E8D": "https://etuf2srkfh.execute-api.us-east-2.amazonaws.com/dev/",
+    "authenticateLambda": "api-authenticateEECA1F93-b12TiFdN3OV1",
+    "authorizerLambda": "api-authorize0036E950-7g8HOq7qWzrz",
+    "updateOrderLambda": "api-updateOrder4A3763D2-Ye1WavXFtTRE",
+    "getOrdersLambda": "api-getOrders222216C7-co1xgsQeJUcg"
+  }
+}

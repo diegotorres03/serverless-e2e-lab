@@ -74,7 +74,6 @@ function toJson(orders) {
  * @apiVersion  1.1.1
  * 
  * 
- * @apiParam  {String} paramName description
  * 
  * @apiSuccess (200) {type} name description
  * 
