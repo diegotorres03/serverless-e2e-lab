@@ -765,6 +765,11 @@ Don't forget to grant read, write access crom dynamo to the respective lambda fu
         ordersTable.grantReadWriteData(updateOrderLambda)   
 ```
 
+**file:** `./infraestructure/lib/api-stack.ts`
+**replace key:** `/* 3.1.2 */`
+```ts
+ORDERS_TABLE: ordersTable.tableName   
+```
 
 **file:** `./infraestructure-py/infraestructure_python/backend_stack.py`
 **replace key:** `# [ ] 3.1.2: connect api to dynamodb`
@@ -802,6 +807,11 @@ Don't forget to grant read, write access crom dynamo to the respective lambda fu
 
 ```
 
+**file:** `./infraestructure-py/infraestructure_python/api_stack.py`
+**replace key:** `/* 3.1.2 */`
+```ts
+ORDERS_TABLE: ordersTable.tableName   
+```
 
 ---
 

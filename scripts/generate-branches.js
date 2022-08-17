@@ -149,9 +149,9 @@ async function run() {
         await setUpPkgNavigation(id, branchesIds, Number(index))
         await wait(200)
 
-        const readme = await generateReadme(branchData, branchData[id].todo)
+        // const readme = await generateReadme(branchData, branchData[id].todo)
         // console.log(readme)
-        await writeFile('./README.out.md', readme)
+        // await writeFile('./README.out.md', readme)
 
         await wait(200)
 

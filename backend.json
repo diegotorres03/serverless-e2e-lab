@@ -1,8 +1,0 @@
-{
-  "backend": {
-    "sqsLambda": "backend-sqsHandler9E1A7184-K7OvEMZ0Fry0",
-    "dynamoLambda": "backend-dynamoHandler15FDB600-KXI7zWaHqdrs",
-    "ordersTableArn": "arn:aws:dynamodb:us-east-2:424404940127:table/backend-orders46FA7C19-EM9N0N0KEZ5J",
-    "ordersTableName": "backend-orders46FA7C19-EM9N0N0KEZ5J"
-  }
-}

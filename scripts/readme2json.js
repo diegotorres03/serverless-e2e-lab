@@ -22,7 +22,7 @@ async function generateStudentSteps() {
 
     // console.log('studentReadme')
     // console.log(studentReadme)
-    await fs.writeFile('./student-guide.md', studentReadme)
+    await fs.writeFile('./README.md', studentReadme)
 
 }
 
