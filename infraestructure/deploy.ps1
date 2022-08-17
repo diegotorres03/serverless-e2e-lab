@@ -1,5 +1,5 @@
 
-cdk bootstrap
+npx cdk bootstrap
 
 ## BACKEND
 
