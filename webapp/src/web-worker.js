@@ -54,20 +54,22 @@ const refreshOrders = async (apiUrl) => {
     console.time('local orders')
     const localOrders = await db.getOrders()
     // console.log(localOrders)
-    
+
     const ordersToDelete = localOrders.filter(order => Date.now() > (Number(order._expireOn) * 1000))
-    if(ordersToDelete.length > 0) console.log('deleting', ordersToDelete.length)
-    
+    if (ordersToDelete.length > 0) console.log('deleting', ordersToDelete.length)
+
     const deletePromises = ordersToDelete.map(order => db.deleteOrder(order.id))
     await Promise.all(deletePromises)
-    
+
     this.postMessage({
         type: 'getOrders',
         orders: localOrders,
     })
     console.timeEnd('local orders')
-    
+
 }
+
+let token = null
 
 onmessage = async function (event) {
     const { apiUrl } = await loadApiSettings()
@@ -80,6 +82,7 @@ onmessage = async function (event) {
 
     const eventType = event.data.type
 
+    if (eventType === 'session') return token = event.data.token
     if (eventType === 'getOrders') return refreshOrders(apiUrl)
 
     if (eventType === 'createOrder') {
@@ -93,34 +96,57 @@ onmessage = async function (event) {
 
         return refreshOrders(apiUrl)
     }
+
+    if (eventType === 'logout') {
+        console.log('logging out', token)
+        return token = null
+    }
+
+    if (eventType === 'login') {
+        const { credentials } = event.data
+        console.log('logging in with ', credentials)
+        await login(`${apiUrl}authenticate`, credentials)
+        return
+    }
+
+
     console.groupEnd()
 }
 
+async function login(authUrl, credentials) {
+    const { token } = await fetch(authUrl, {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(res => res.json())
+    console.log(token)
+    this.postMessage({ type: 'loggedin', token, })
+    return token
+}
 
 async function getOrders(apiUrl) {
     const url = `${apiUrl}orders`
-    let orders = []
-    
     // [ ] 2.3.1: get orders from api
-    
+
     return orders
 }
 
-// async function getOrdersHtml(apiUrl) {
-//     const url = `${apiUrl}orders`
-
-//     // [o] 2.3.1: get orders from api
-//     const ordersHtml = await fetch(url,
-//         // [o] 5.3.1 use Authorization header on http getOrders
-//         {
-//             headers: {
-//                 'Content-Type': 'text/html',
-//                 'Authorization': 'json.web.token',
-//             }
-//         }
-//     ).then(res => res.text()).catch(err => console.warn(err))
-//     return ordersHtml
-// }
+async function getOrdersHtml(apiUrl) {
+    const url = `${apiUrl}orders`
+    // [o] 2.3.1: get orders from api
+    const ordersHtml = await fetch(url,
+        // [o] 5.3.1 use Authorization header on http getOrders
+        {
+            headers: {
+                'Content-Type': 'text/html',
+                'Authorization': token, // 'json.web.token',
+            }
+        }
+    ).then(res => res.text()).catch(err => console.warn(err))
+    return ordersHtml
+}
 
 /**
     *
@@ -130,8 +156,9 @@ async function getOrders(apiUrl) {
     */
 function createOrder(url, order) {
     const { id, customer, items } = order
-
     // [ ] 2.3.2: send the order to the api
+    
+    return fetch(url, options).then(res => res.json())
 }
 
 
