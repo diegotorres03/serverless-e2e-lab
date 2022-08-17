@@ -46,12 +46,6 @@ In order to properly run this lab, we will be using the first hour to install th
 
 
 
-
-# Project Set Up
-1. clone [Serverless-e2e-lab](https://github.com/diegotorres03/serverless-e2e-lab) by running `git clone https://github.com/diegotorres03/serverless-e2e-lab.git`  in Powershell.
-2. on Powershell cd in to `infraestructure` if you want to use Typescript or in `infraestructure-py` if you want do use Python, then run `cdk bootstrap`
-3. run `npm i -g apidoc`
-
 ---
 
 # 1.1.1: `create S3 Bucket as web hosting to store webapp`
