@@ -154,7 +154,7 @@ async function getOrdersHtml(apiUrl) {
     * @param {Order} order
     * @return {*} 
     */
-function createOrder(url, order) {
+async function createOrder(url, order) {
     const { id, customer, items } = order
     // [ ] 2.3.2: send the order to the api
     
